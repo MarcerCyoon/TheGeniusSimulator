@@ -231,7 +231,7 @@ function simulate() {
 
     placements.push(retrieve(players, index));
 
-    episode += 1;
+    episode++;
 
     if (episode == 12) {
       phase++;
@@ -286,9 +286,9 @@ function simulate() {
     noteResult(episode, "LOSE", players[fmLoser]);
 
     if (fmWinner == 1) {
-      finalScore += 1;
+      finalScore++;
     } else {
-      finalScore -= 1;
+      finalScore--;
     }
 
     if (Math.abs(finalScore) == 2) {
@@ -316,7 +316,7 @@ function simulate() {
       sim.setAttribute("aria-disabled", "true");
 
     } else {
-      episode += 1;
+      episode++;
       phase = 6;
     }
 
