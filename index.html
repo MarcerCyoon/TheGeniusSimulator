@@ -129,7 +129,7 @@ function init() {
   sim.classList.remove("disabled");
   sim.removeAttribute("aria-disabled");
 
-  phase = 0; // 0 = MM Start, 1 = MM Results, 2 = DMO Announcement, 3 = DM Start, 4 = DM Results, 5 = Finals Prep, 6 = Finals Results
+  phase = 0; // 0 = MM Start, 1 = MM Results, 2 = DMO Announcement, 3 = DM Start, 4 = DM Results, 5 = Items, 6 = Finals Prep, 7 = Finals Results
   episode = 1;
   placements = [];
   finalScore = 0;
@@ -236,6 +236,17 @@ function simulate() {
     }
 
   } else if (phase == 5) {
+    titleText = "Finals: Supporters' Choices\n";
+
+    for (player of placements) {
+      var choice = getRandomInt(0, 2);
+      announceText += player + " chooses to support " + players[choice] + " in the Finals.\n";
+      noteResult(episode, players[choice], player);
+    }
+
+    phase++;
+
+  } else if (phase == 6) {
     var match = episode - 11;
     var fmChoice = getRandomInt(0, dmArray.length);
     titleText = "Final Match " + match + ": " + dmArray[fmChoice] + "\n";
@@ -255,7 +266,7 @@ function simulate() {
     tableData[2][episode] = dmArray[fmChoice];
     phase++;
 
-  } else if (phase == 6) {
+  } else if (phase == 7) {
     var fmWinner = getRandomInt(0, 2);
     var fmLoser = 1 - fmWinner;
     var match = episode - 11;
@@ -297,7 +308,7 @@ function simulate() {
 
     } else {
       episode += 1;
-      phase = 5;
+      phase = 6;
     }
 
   } else {
@@ -381,6 +392,17 @@ function makeResults() {
             break;
           case "LOSE":
             cell.classList.add("elim");
+            break;
+          // top two placements receive items
+          case placements[placements.length - 1]:
+            if (j != 0) {
+              cell.classList.add("support");
+            }
+            break;
+          case placements[placements.length - 2]:
+            if (j != 0) {
+              cell.classList.add("support");
+            }
             break;
         }
 
