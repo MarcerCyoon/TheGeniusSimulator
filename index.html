@@ -238,11 +238,16 @@ function simulate() {
   } else if (phase == 5) {
     titleText = "Finals: Supporters' Choices\n";
 
+    var itemCount = [0, 0];
+
     for (player of placements) {
       var choice = getRandomInt(0, 2);
       announceText += player + " chooses to support " + players[choice] + " in the Finals.\n";
       noteResult(episode, players[choice], player);
+      itemCount[choice]++;
     }
+
+    announceText += "\n" + players[0] + " receives " + itemCount[0] + " items, and " + players[1] + " receives " + itemCount[1] + " items.\n";
 
     phase++;
 
