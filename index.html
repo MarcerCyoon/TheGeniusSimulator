@@ -156,18 +156,18 @@ function init() {
 }
 
 function simulate() {
-  announce_text = ""
+  announceText = ""
 
   if (phase == 0) {
     var possibleMMs = mmArray.filter(mm => mm[1] == episode);
     var mmChoice = getRandomInt(0, possibleMMs.length);
     playersCopy = [...players];
 
-    title_text = "Main Match " + episode + ": " + possibleMMs[mmChoice][0] + "\n";
-    announce_text += players.length + " players remain:\n";
+    titleText = "Main Match " + episode + ": " + possibleMMs[mmChoice][0] + "\n";
+    announceText += players.length + " players remain:\n";
 
     for (player of players) {
-      announce_text += player + "\n";
+      announceText += player + "\n";
     }
 
     tableData[0][episode] = "EP" + episode;
@@ -176,25 +176,25 @@ function simulate() {
 
   } else if (phase === 1) {
     var winner = retrieve(playersCopy, getRandomInt(0, playersCopy.length));
-    announce_text += "The MM winner is " + winner + "." + "\n";
+    announceText += "The MM winner is " + winner + "." + "\n";
     noteResult(episode, "WIN", winner);
 
     if (episode < 10) {
       var immunity = retrieve(playersCopy, getRandomInt(0, playersCopy.length));
-      announce_text += winner + " gives their second Token of Life to " + immunity + "." + "\n";
+      announceText += winner + " gives their second Token of Life to " + immunity + "." + "\n";
       noteResult(episode, "IMM", immunity);
     }
 
     if (episode < 11) {
       var loser = retrieve(playersCopy, getRandomInt(0, playersCopy.length));
       var dmo = retrieve(playersCopy, getRandomInt(0, playersCopy.length));
-      announce_text += loser + " is the Elimination Candidate." + "\n";
+      announceText += loser + " is the Elimination Candidate." + "\n";
       phase++;
 
     } else {
       var loser = playersCopy[0];
       var dmo = playersCopy[1];
-      announce_text += loser + " and " + dmo + " automatically enter the DM." + "\n";
+      announceText += loser + " and " + dmo + " automatically enter the DM." + "\n";
       phase += 2;
     }
 
@@ -203,27 +203,27 @@ function simulate() {
     dmParticipants = [loser, dmo];
 
   } else if (phase == 2) {
-    title_text = "Table of Judgement";
-    announce_text += dmParticipants[0] + " selects " + dmParticipants[1] + " as their opponent in the DM." + "\n";
+    titleText = "Table of Judgement";
+    announceText += dmParticipants[0] + " selects " + dmParticipants[1] + " as their opponent in the DM." + "\n";
     noteResult(episode, "DMO", dmParticipants[1]);
     phase++;
 
   } else if (phase == 3) {
     var dmChoice = getRandomInt(0, dmArray.length);
 
-    title_text = "Death Match " + episode + ": " + dmArray[dmChoice] + "\n";
-    announce_text += dmParticipants[0] + " vs. " + dmParticipants[1] + "\n";
+    titleText = "Death Match " + episode + ": " + dmArray[dmChoice] + "\n";
+    announceText += dmParticipants[0] + " vs. " + dmParticipants[1] + "\n";
     tableData[2][episode] = dmArray[dmChoice];
     phase++;
 
   } else if (phase == 4) {
-    var dm_winner = getRandomInt(0, 2);
-    var dm_loser = 1 - dm_winner;
+    var dmWinner = getRandomInt(0, 2);
+    var dmLoser = 1 - dmWinner;
 
-    announce_text += dmParticipants[dm_winner] + " beats " + dmParticipants[dm_loser] + " in the DM." + "\n";
-    noteResult(episode, "ELIM", dmParticipants[dm_loser]);
+    announceText += dmParticipants[dmWinner] + " beats " + dmParticipants[dmLoser] + " in the DM." + "\n";
+    noteResult(episode, "ELIM", dmParticipants[dmLoser]);
 
-    index = players.indexOf(dmParticipants[dm_loser]);
+    index = players.indexOf(dmParticipants[dmLoser]);
 
     placements.push(retrieve(players, index));
 
@@ -238,17 +238,17 @@ function simulate() {
   } else if (phase == 5) {
     var match = episode - 11;
     var fmChoice = getRandomInt(0, dmArray.length);
-    title_text = "Final Match " + match + ": " + dmArray[fmChoice] + "\n";
-    announce_text += players[0] + " vs. " + players[1] + "\n";
+    titleText = "Final Match " + match + ": " + dmArray[fmChoice] + "\n";
+    announceText += players[0] + " vs. " + players[1] + "\n";
 
     if (finalScore == 0 && match == 1) {
-      announce_text += "Tied 0 - 0\n";
+      announceText += "Tied 0 - 0\n";
     } else if (finalScore == -1) {
-      announce_text += players[0] + " leads 1 - 0\n";
+      announceText += players[0] + " leads 1 - 0\n";
     } else if (finalScore == 1) {
-      announce_text += players[1] + " leads 0 - 1\n";
+      announceText += players[1] + " leads 0 - 1\n";
     } else {
-      announce_text += "Tied 1 - 1\n";
+      announceText += "Tied 1 - 1\n";
     }
 
     tableData[0][episode] = "FM" + match;
@@ -256,40 +256,40 @@ function simulate() {
     phase++;
 
   } else if (phase == 6) {
-    var fm_winner = getRandomInt(0, 2);
-    var fm_loser = 1 - fm_winner;
+    var fmWinner = getRandomInt(0, 2);
+    var fmLoser = 1 - fmWinner;
     var match = episode - 11;
 
-    announce_text += players[fm_winner] + " wins FM" + match + " against " + players[fm_loser] + "." + "\n";
+    announceText += players[fmWinner] + " wins FM" + match + " against " + players[fmLoser] + "." + "\n";
 
-    noteResult(episode, "WIN", players[fm_winner]);
-    noteResult(episode, "LOSE", players[fm_loser]);
+    noteResult(episode, "WIN", players[fmWinner]);
+    noteResult(episode, "LOSE", players[fmLoser]);
 
-    if (fm_winner == 1) {
+    if (fmWinner == 1) {
       finalScore += 1;
     } else {
       finalScore -= 1;
     }
 
     if (Math.abs(finalScore) == 2) {
-      announce_text += players[fm_winner] + " wins the Finals against " + players[fm_loser] + " 2-0." + "\n";
+      announceText += players[fmWinner] + " wins the Finals against " + players[fmLoser] + " 2-0." + "\n";
 
-      placements.push(players[fm_loser]);
-      placements.push(players[fm_winner]);
+      placements.push(players[fmLoser]);
+      placements.push(players[fmWinner]);
 
-      announce_text += "Congratulations!" + "\n";
+      announceText += "Congratulations!" + "\n";
 
       sim = document.getElementById("sim");
       sim.classList.add("disabled");
       sim.setAttribute("aria-disabled", "true");
 
     } else if (match == 3) {
-      announce_text += players[fm_winner] + " wins the Finals against " + players[fm_loser] + " 2-1." + "\n";
+      announceText += players[fmWinner] + " wins the Finals against " + players[fmLoser] + " 2-1." + "\n";
 
-      placements.push(players[fm_loser]);
-      placements.push(players[fm_winner]);
+      placements.push(players[fmLoser]);
+      placements.push(players[fmWinner]);
 
-      announce_text += "Congratulations!" + "\n";
+      announceText += "Congratulations!" + "\n";
 
       sim = document.getElementById("sim");
       sim.classList.add("disabled");
@@ -301,13 +301,13 @@ function simulate() {
     }
 
   } else {
-    announce_text += "Error!" + "\n";
+    announceText += "Error!" + "\n";
   }
 
-  document.getElementById("announcements").innerHTML = announce_text;
+  document.getElementById("announcements").innerHTML = announceText;
 
-  if (title_text) {
-    document.getElementById("title").innerHTML = title_text;
+  if (titleText) {
+    document.getElementById("title").innerHTML = titleText;
   }
 
 
