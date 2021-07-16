@@ -80,6 +80,7 @@
 </html>
 
 <script>
+// Globals
 var players = [];
 var phase = 0;
 var episode = 1;
@@ -113,8 +114,8 @@ function init() {
     if (!warning.classList.contains("mb-2")) {
       warning.classList.add("mb-2");
     }
-
     return
+
   } else {
     warning.innerHTML = "";
     warning.classList.remove("mb-2");
@@ -151,7 +152,7 @@ function init() {
   }
 
   resetResults();
-  console.log("initialized!");
+  // console.log("initialized!");
 
   simulate();
 }
@@ -162,6 +163,8 @@ function simulate() {
   if (phase == 0) {
     var possibleMMs = mmArray.filter(mm => mm[1] == episode);
     var mmChoice = getRandomInt(0, possibleMMs.length);
+    // Create copy so that you can manipulate and retrieve without
+    // changing original list.
     playersCopy = [...players];
 
     titleText = "Main Match " + episode + ": " + possibleMMs[mmChoice][0] + "\n";
@@ -338,6 +341,7 @@ function setPlayers(num) {
 }
 
 function noteResult(episode, type, player) {
+  // Note a result on the tableData.
   for (var i = 3; i < 17; i++) {
     if (tableData[i][0] == player) {
       tableData[i][episode] = type;
@@ -353,6 +357,7 @@ function resetResults() {
 
 function makeResults() {
   var results = document.getElementById("results");
+  // Slice out headers and only sort player data
   relevantData = [...tableData].slice(3, tableData.length);
   relevantData.sort(compare);
   tableData.splice(-(tableData.length - 3));
