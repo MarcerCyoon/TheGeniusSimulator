@@ -9,13 +9,13 @@ body {
 #title {
   display: none;
   white-space: pre-line;
-  font-size: 1.5vw;
+  font-size: 28px;
 }
 
 #announcements {
   display: none;
   white-space: pre-line;
-  font-size: 1.15vw;
+  font-size: 18px;
 }
 
 #results {
