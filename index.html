@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <script src="globals.js"></script>
+    <script src="textFit.js"></script>
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+
+    <title>The Genius Simulator</title>
+  </head>
+
+  <body>
+    <nav class="navbar navbar-expand-xl navbar-dark bg-dark">
+      <a class="navbar-brand">The Genius Simulator</a>
+
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item mr-md-3">
+          <a class="navbar-link" href="./index.html" style="color: white;">Reset</a>
+        </li>
+
+      </ul>
+        <span class="navbar-text">Marcer</span>
+    </nav>
+
+    <div class="mt-2"></div>
+
+    <div class="container">
+      <div class="form-row">
+        <label for="players" class="mt-1 col-auto">Players (13)</label>
+      </div>
+
+      <div class="form-row">
+        <div class="dropdown mb-3 col-auto">
+          <button type="button" class="btn btn-info dropdown-toggle" id="dropdownDefaults" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Defaults...
+          </button>
+          <div class="dropdown-menu" aria-labelledby="dropdownDefaults">
+            <button type="button" class="dropdown-item" onclick="setPlayers(0)">The Genius S1</a>
+            <button type="button" class="dropdown-item" onclick="setPlayers(1)">The Genius S2</a>
+            <button type="button" class="dropdown-item" onclick="setPlayers(2)">The Genius S3</a>
+            <button type="button" class="dropdown-item" onclick="setPlayers(3)">The Genius S4</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="mb-3 col-auto">
+          <div id="warning"></div>
+          <textarea class="form-control" id="players" rows=7 cols=80>Minsoo, Yuram, Changyeop, Jungmoon, Jinho, Gura, Kyungran, Minseo, Poong, Sunggyu, Junseok, Sangmin, Eunji</textarea>
+        </div>
+      </div>
+
+      <a type="button" class="btn btn-primary btn-lg disabled" id="sim" onclick="simulate()" aria-disabled="true">Simulate!</a>
+      <div class="mt-2"></div>
+      <button type="button" class="btn btn-secondary" onclick="init()">INITIALIZE</button>
+
+      <div id="title" class="mt-3"></div>
+      <div id="announcements" class="mt-1 mb-3"></div>
+
+    </div>
+
+    <div class="mt-2"></div>
+
+    <div class="container-fluid">
+      <table id="results">
+      </table>
+    </div>
+
+    <div class="mt-2"></div>
+
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+  </body>
+</html>
+
+<script>
+var players = [];
+var phase = 0;
+var episode = 1;
+var placements = [];
+var dmParticipants;
+var finalScore = 0;
+var tableData = new Array(16);
+
+for (var i = 0; i < 16; i++) {
+  tableData[i] = new Array(15);
+
+  if (i == 0) {
+    tableData[i][0] = "#";
+  } else if (i == 1) {
+    tableData[i][0] = "MM";
+  } else if (i == 2) {
+    tableData[i][0] = "DM";
+  } else {
+    tableData[i][0] = players[i-3];
+  }
+}
+
+function init() {
+  text = document.getElementById("players").value;
+  players = text.split(", ")
+
+  warning = document.getElementById("warning");
+  if (players.length != 13) {
+    warning.innerHTML = "The Genius needs 13 players! Currently you have " + players.length + ".";
+
+    if (!warning.classList.contains("mb-2")) {
+      warning.classList.add("mb-2");
+    }
+
+    return
+  } else {
+    warning.innerHTML = "";
+    warning.classList.remove("mb-2");
+  }
+
+  document.getElementById("title").style.display = "block";
+  document.getElementById("title").innerHTML = "";
+
+  document.getElementById("announcements").style.display = "block";
+  document.getElementById("announcements").innerHTML = "";
+
+  sim = document.getElementById("sim");
+  sim.classList.remove("disabled");
+  sim.removeAttribute("aria-disabled");
+
+  phase = 0; // 0 = MM Start, 1 = MM Results, 2 = DMO Announcement, 3 = DM Start, 4 = DM Results, 5 = Finals Prep, 6 = Finals Results
+  episode = 1;
+  placements = [];
+  finalScore = 0;
+  tableData = new Array(3 + players.length);
+
+  for (var i = 0; i < 3 + players.length; i++) {
+    tableData[i] = new Array(15);
+
+    if (i == 0) {
+      tableData[i][0] = "#";
+    } else if (i == 1) {
+      tableData[i][0] = "MM";
+    } else if (i == 2) {
+      tableData[i][0] = "DM";
+    } else {
+      tableData[i][0] = players[i-3];
+    }
+  }
+
+  resetResults();
+  console.log("initialized!");
+
+  simulate();
+}
+
+function simulate() {
+  announce_text = ""
+
+  if (phase == 0) {
+    var possibleMMs = mmArray.filter(mm => mm[1] == episode);
+    var mmChoice = getRandomInt(0, possibleMMs.length);
+    playersCopy = [...players];
+
+    title_text = "Main Match " + episode + ": " + possibleMMs[mmChoice][0] + "\n";
+    announce_text += players.length + " players remain:\n";
+
+    for (player of players) {
+      announce_text += player + "\n";
+    }
+
+    tableData[0][episode] = "EP" + episode;
+    tableData[1][episode] = possibleMMs[mmChoice][0];
+    phase++;
+
+  } else if (phase === 1) {
+    var winner = retrieve(playersCopy, getRandomInt(0, playersCopy.length));
+    announce_text += "The MM winner is " + winner + "." + "\n";
+    noteResult(episode, "WIN", winner);
+
+    if (episode < 10) {
+      var immunity = retrieve(playersCopy, getRandomInt(0, playersCopy.length));
+      announce_text += winner + " gives their second Token of Life to " + immunity + "." + "\n";
+      noteResult(episode, "IMM", immunity);
+    }
+
+    if (episode < 11) {
+      var loser = retrieve(playersCopy, getRandomInt(0, playersCopy.length));
+      var dmo = retrieve(playersCopy, getRandomInt(0, playersCopy.length));
+      announce_text += loser + " is the Elimination Candidate." + "\n";
+      phase++;
+
+    } else {
+      var loser = playersCopy[0];
+      var dmo = playersCopy[1];
+      announce_text += loser + " and " + dmo + " automatically enter the DM." + "\n";
+      phase += 2;
+    }
+
+    noteResult(episode, "EC", loser);
+    noteResult(episode, "DMO", dmo);
+    dmParticipants = [loser, dmo];
+
+  } else if (phase == 2) {
+    title_text = "Table of Judgement";
+    announce_text += dmParticipants[0] + " selects " + dmParticipants[1] + " as their opponent in the DM." + "\n";
+    noteResult(episode, "DMO", dmParticipants[1]);
+    phase++;
+
+  } else if (phase == 3) {
+    var dmChoice = getRandomInt(0, dmArray.length);
+
+    title_text = "Death Match " + episode + ": " + dmArray[dmChoice] + "\n";
+    announce_text += dmParticipants[0] + " vs. " + dmParticipants[1] + "\n";
+    tableData[2][episode] = dmArray[dmChoice];
+    phase++;
+
+  } else if (phase == 4) {
+    var dm_winner = getRandomInt(0, 2);
+    var dm_loser = 1 - dm_winner;
+
+    announce_text += dmParticipants[dm_winner] + " beats " + dmParticipants[dm_loser] + " in the DM." + "\n";
+    noteResult(episode, "ELIM", dmParticipants[dm_loser]);
+
+    index = players.indexOf(dmParticipants[dm_loser]);
+
+    placements.push(retrieve(players, index));
+
+    episode += 1;
+
+    if (episode == 12) {
+      phase++;
+    } else {
+      phase = 0;
+    }
+
+  } else if (phase == 5) {
+    var match = episode - 11;
+    var fmChoice = getRandomInt(0, dmArray.length);
+    title_text = "Final Match " + match + ": " + dmArray[fmChoice] + "\n";
+    announce_text += players[0] + " vs. " + players[1] + "\n";
+
+    if (finalScore == 0 && match == 1) {
+      announce_text += "Tied 0 - 0\n";
+    } else if (finalScore == -1) {
+      announce_text += players[0] + " leads 1 - 0\n";
+    } else if (finalScore == 1) {
+      announce_text += players[1] + " leads 0 - 1\n";
+    } else {
+      announce_text += "Tied 1 - 1\n";
+    }
+
+    tableData[0][episode] = "FM" + match;
+    tableData[2][episode] = dmArray[fmChoice];
+    phase++;
+
+  } else if (phase == 6) {
+    var fm_winner = getRandomInt(0, 2);
+    var fm_loser = 1 - fm_winner;
+    var match = episode - 11;
+
+    announce_text += players[fm_winner] + " wins FM" + match + " against " + players[fm_loser] + "." + "\n";
+
+    noteResult(episode, "WIN", players[fm_winner]);
+    noteResult(episode, "LOSE", players[fm_loser]);
+
+    if (fm_winner == 1) {
+      finalScore += 1;
+    } else {
+      finalScore -= 1;
+    }
+
+    if (Math.abs(finalScore) == 2) {
+      announce_text += players[fm_winner] + " wins the Finals against " + players[fm_loser] + " 2-0." + "\n";
+
+      placements.push(players[fm_loser]);
+      placements.push(players[fm_winner]);
+
+      announce_text += "Congratulations!" + "\n";
+
+      sim = document.getElementById("sim");
+      sim.classList.add("disabled");
+      sim.setAttribute("aria-disabled", "true");
+
+    } else if (match == 3) {
+      announce_text += players[fm_winner] + " wins the Finals against " + players[fm_loser] + " 2-1." + "\n";
+
+      placements.push(players[fm_loser]);
+      placements.push(players[fm_winner]);
+
+      announce_text += "Congratulations!" + "\n";
+
+      sim = document.getElementById("sim");
+      sim.classList.add("disabled");
+      sim.setAttribute("aria-disabled", "true");
+
+    } else {
+      episode += 1;
+      phase = 5;
+    }
+
+  } else {
+    announce_text += "Error!" + "\n";
+  }
+
+  document.getElementById("announcements").innerHTML = announce_text;
+
+  if (title_text) {
+    document.getElementById("title").innerHTML = title_text;
+  }
+
+
+  if (placements.length == 13) {
+    makeResults();
+  }
+}
+
+function setPlayers(num) {
+  document.getElementById("players").innerHTML = playersArrays[num].join(", ");
+}
+
+function noteResult(episode, type, player) {
+  for (var i = 3; i < 17; i++) {
+    if (tableData[i][0] == player) {
+      tableData[i][episode] = type;
+      break;
+    }
+  }
+}
+
+function resetResults() {
+  var results = document.getElementById("results");
+  results.innerHTML = "";
+}
+
+function makeResults() {
+  var results = document.getElementById("results");
+  relevantData = [...tableData].slice(3, tableData.length);
+  relevantData.sort(compare);
+  tableData.splice(-(tableData.length - 3));
+  tableData = tableData.concat(relevantData);
+
+  for (var i = 0; i < tableData.length; i++) {
+    var row = results.insertRow(-1);
+    var elim = false;
+
+    if (i == 0 || i == 2) {
+      row.classList.add("divider-row");
+    }
+
+    for (var j = 0; j < tableData[0].length; j++) {
+      var cell = row.insertCell(-1);
+
+      if (j == 0) {
+        cell.classList.add("first");
+        cell.classList.add("divider-col");
+      } else if (j == 11) {
+        cell.classList.add("divider-col");
+      }
+
+      if (tableData[i][j]) {
+        cell.innerHTML = tableData[i][j];
+
+        switch (tableData[i][j]) {
+          case "ELIM":
+            cell.classList.add("elim");
+            elim = true;
+            break;
+          case "WIN":
+            cell.classList.add("win");
+            break;
+          case "IMM":
+            cell.classList.add("imm");
+            break;
+          case "DMO":
+            cell.classList.add("dmo");
+            break;
+          case "EC":
+            cell.classList.add("ec");
+            break;
+          case "LOSE":
+            cell.classList.add("elim");
+            break;
+        }
+
+      } else {
+        if (!elim) {
+          cell.innerHTML = "--";
+        }
+      }
+      textFit(cell);
+    }
+  }
+}
+
+function compare(a, b) {
+  // Compare function to sort table data.
+  if (!a.includes("ELIM") && !b.includes("ELIM")) {
+    var countOccurrences = (arr, val) => arr.reduce((a, v) => (v === val ? a + 1 : a), 0);
+
+    if (countOccurrences(a, "LOSE") == 2) {
+      return 1
+    } else {
+      return -1
+    }
+
+  } else if (!a.includes("ELIM")) {
+    return -1
+  } else if (!b.includes("ELIM")){
+    return 1
+  } else {
+    return b.indexOf("ELIM") - a.indexOf("ELIM")
+  }
+}
+
+function retrieve(arr, num) {
+  return arr.splice(num, 1)[0];
+}
+</script>
