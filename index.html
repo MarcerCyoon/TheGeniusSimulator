@@ -162,13 +162,14 @@ function simulate() {
 
   switch (phase) {
     case 0:
-      var possibleMMs = mmArray.filter(mm => mm[1] == episode);
+      var possibleMMs = mmArray.filter(mm => mm.episode == episode);
       var mmChoice = getRandomInt(0, possibleMMs.length);
+      numWinners = possibleMMs[mmChoice].TOLs;
       // Create copy so that you can manipulate and retrieve without
       // changing original list.
       playersCopy = [...players];
 
-      titleText = "Main Match " + episode + ": " + possibleMMs[mmChoice][0] + "\n";
+      titleText = "Main Match " + episode + ": " + possibleMMs[mmChoice].name + "\n";
       announceText += players.length + " players remain:\n";
 
       for (player of players) {
@@ -176,22 +177,35 @@ function simulate() {
       }
 
       tableData[0][episode] = "EP" + episode;
-      tableData[1][episode] = possibleMMs[mmChoice][0];
+      tableData[1][episode] = possibleMMs[mmChoice].name;
       phase++;
       break;
 
     case 1:
-      var winner = retrieve(playersCopy, getRandomInt(0, playersCopy.length));
-      announceText += "The MM winner is " + winner + "." + "\n";
-      noteResult(episode, "WIN", winner);
-
-      if (episode < 10) {
-        var immunity = retrieve(playersCopy, getRandomInt(0, playersCopy.length));
-        announceText += winner + " gives their second Token of Life to " + immunity + "." + "\n";
-        noteResult(episode, "IMM", immunity);
+    var winners = [];
+      for (var i = 0; i < numWinners; i++) {
+        var winner = retrieve(playersCopy, getRandomInt(0, playersCopy.length));
+        winners.push(winner);
+        noteResult(episode, "WIN", winner);
       }
 
-      if (episode < 11) {
+      var winnerText = winners.join(", ");
+
+      if (numWinners == 1) {
+        announceText += "The MM winner is " + winnerText + ".\n";
+
+        // Give out extra TOL only if there is a sole winner, and it's not episode 10/11.
+        if (episode < 10) {
+          var immunity = retrieve(playersCopy, getRandomInt(0, playersCopy.length));
+          announceText += winner + " gives their second Token of Life to " + immunity + "." + "\n";
+          noteResult(episode, "IMM", immunity);
+        }
+
+      } else {
+        announceText += "The MM winners are " + winnerText + ".\n";
+      }
+
+      if ((players.length - numWinners) > 2) {
         var loser = retrieve(playersCopy, getRandomInt(0, playersCopy.length));
         var dmo = retrieve(playersCopy, getRandomInt(0, playersCopy.length));
         announceText += loser + " is the Elimination Candidate." + "\n";
