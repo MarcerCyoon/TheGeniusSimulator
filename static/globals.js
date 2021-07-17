@@ -84,7 +84,7 @@ const mmArray = [
 	new MainMatch("7 Commandments", 5, 1, 1),
 	new MainMatch("Miner Game", 5, 1, 1),
 	new MainMatch("Loyalists and Rebels", 5, 1, 1),
-	new MainMatch("Catch the Burglar", 6, 3, 6),
+	new MainMatch("Catch the Burglar", 6, 1, 6),
 	new MainMatch("Monopoly Game", 6, 1, 1),
 	new MainMatch("Stormy Stock Market", 6, 1, 1),
 	new MainMatch("Garnet Thief", 6, 1, 1),
