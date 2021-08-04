@@ -46,7 +46,7 @@ const dmArray = [
 	"Truth Detector",
 	"Betting Black and White",
 	"Black and White",
-	"Black and White 2",
+	"Black and White II",
 	"Betting RPS",
 	"Indian Poker",
 	"Double-sided Poker",
@@ -77,7 +77,7 @@ const mmArray = [
 	new MainMatch("Today's Menu", 11, 1, 1),
 	new MainMatch("Zombie Game", 10, 1, 8),
 	new MainMatch("Blackout Game", 10, 5, 5),
-	new MainMatch("Swords and Shields", 10, 5, 5),
+	new MainMatch("Sword and Shield", 10, 5, 5),
 	new MainMatch("Fish Shop", 10, 1, 1),
 	new MainMatch("Scamming Horse Race", 9, 1, 1),
 	new MainMatch("7 Commandments", 9, 1, 1),
@@ -164,7 +164,12 @@ const prefixArray = [
 	"X",
 	"Chill",
 	"Betting",
-	"Opal"
+	"Opal",
+	"Famine",
+	"Monopoly",
+	"Seat",
+	"Constellation",
+	"Big Deal"
 ];
 
 const suffixArray = [
@@ -173,6 +178,7 @@ const suffixArray = [
 	"'s Dilemma",
 	", Pass",
 	"Poker",
+	"Hold'em",
 	"Auction",
 	"Yutnori",
 	"Game",
