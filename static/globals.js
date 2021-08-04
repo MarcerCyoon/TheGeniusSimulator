@@ -176,6 +176,7 @@ const prefixArray = [
 	"Halo",
 	"Paradox",
 	"Element",
+	"Murder",
 	"awa"
 ];
 
@@ -219,7 +220,8 @@ const suffixArray = [
 	"Black and White", // meme black and white in both arrays
 	"Element", // meme element in both arrays
 	"Trouble",
-	"Quattro"
+	"Quattro",
+	"Mayhem"
 ];
 
 function generateMainMatchName() {
