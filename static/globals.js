@@ -125,9 +125,11 @@ const prefixArray = [
 	"Middle",
 	"Elevator",
 	"Expression",
+	"Chain",
 	"Garnet",
 	"Fruit",
 	"Spice",
+	"Truth",
 	"Confined",
 	"Scamming",
 	"Seed",
@@ -139,18 +141,22 @@ const prefixArray = [
 	"Abundance",
 	"1, 2, 3",
 	"Black and White",
+	"Dissenting",
 	"Plus",
 	"Minus",
 	"Apotheosis",
 	"Blockade",
 	"Winning",
 	"Losing",
+	"Restricted",
+	"Sliding",
 	"Unfair",
 	"Reverse",
 	"Misére",
 	"Open",
 	"Fish",
 	"Food",
+	"Image",
 	"Social",
 	"Crystal",
 	"Miner",
@@ -171,6 +177,14 @@ const prefixArray = [
 	"ID",
 	"Chill",
 	"Betting",
+	"Bidding",
+	"Today's",
+	"Yesterday's",
+	"Tomorrow's",
+	"Liar's",
+	"Liar",
+	"Coin",
+	"Gold",
 	"Opal",
 	"Famine",
 	"Monopoly",
@@ -188,8 +202,12 @@ const prefixArray = [
 	"Halo",
 	"Paradox",
 	"Element",
+	"Alchemy",
 	"Gyul",
+	"Hap",
 	"Clone",
+	"Binary",
+	"Hexadecimal",
 	"Definitely Not",
 	"One Night",
 	"Welcome to the",
@@ -198,7 +216,11 @@ const prefixArray = [
 	"Sign",
 	"Gift",
 	"Murder",
+	"Dragon",
+	"Wyvern",
 	"Squeaky",
+	"Sword",
+	"Shield",
 	"awa"
 ];
 
@@ -207,22 +229,26 @@ const suffixArray = [
 	"Thief",
 	"'s Dilemma",
 	"Dilemma",
+	"'s Deceit",
+	"Deceit",
 	"'s Court",
 	"Court",
 	"'s Count",
 	"Count",
 	", Pass",
+	"Menu",
 	"Goofspiel",
 	"Poker",
 	"Hold'em",
 	"Roulette",
 	"Auction",
 	"Sign",
-	"Yutnori",
-	"Hap",
+	"Dice",
 	"Game",
 	"Chain",
+	"Plunder",
 	"Dungeon",
+	"Escape",
 	"Burglar",
 	"Dominion",
 	"Stand",
@@ -232,23 +258,30 @@ const suffixArray = [
 	"Labyrinth",
 	"Janggi",
 	"Ur",
+	"Yutnori",
+	"Gomoku",
 	"Chess",
 	"Checkers",
 	"Tic-Tac-Toe",
 	"RPS",
 	"Dots and Boxes",
 	"Tetris",
+	"Effect",
 	"Streak",
 	"Judgment",
 	"Commandments",
+	"Collector",
 	"Detector",
+	"Deflector",
 	"Slingshot",
 	"Simulator",
 	"Shop",
+	"Trick",
 	"Hunt",
 	"Apocalypse",
 	"Warfare",
 	"War",
+	"Crusade",
 	"Battle Royale",
 	"Snake",
 	"Rebels",
@@ -257,12 +290,15 @@ const suffixArray = [
 	"Mafia",
 	"Marathon",
 	"Basketball",
+	"Gyul",
+	"Hap",
 	"Werewolf", // meme werewolf in both arrays
 	"Black and White", // meme black and white in both arrays
 	"Element", // meme element in both arrays
 	"Trouble",
 	"Quattro",
 	"Network",
+	"City",
 	"Mayhem"
 ];
 
@@ -287,8 +323,8 @@ function generateMainMatchName() {
 		if (chance < 16) {
 			// filter out ", pass" if >1 prefixes
 			suffixes = suffixArray.filter(suffix => !suffix.includes(","));
-		} else if (name.includes(" the")) {
-			// filter out all the ones with grammar if it name has "Welcome to the" or "Catch the"
+		} else if (name.includes(" the") || name.includes("'s")) {
+			// filter out all the ones with grammar if name has "Welcome to the" or "Catch the" or a "'s"
 			suffixes = suffixArray.filter(suffix => !(suffix.includes(",") || suffix.includes("'s")));
 		}
 
@@ -303,7 +339,7 @@ function generateMainMatchName() {
 
 	} else {
 		var nameArray = [];
-		var prefixes = prefixArray.filter(prefix => !(prefix.includes(" the")));
+		var prefixes = prefixArray.filter(prefix => !(prefix.includes(" the") || prefix.includes("'s")));
 		var suffixes = suffixArray.filter(suffix => !(suffix.includes(",") || suffix.includes("'s")));
 		var words = [...prefixes, ...suffixes];
 
