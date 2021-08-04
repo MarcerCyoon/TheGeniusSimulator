@@ -31,7 +31,7 @@
 
     <div class="container">
       <div class="form-row">
-        <label for="players" class="mt-1 col-auto">Players (13)</label>
+        <label for="players" class="mt-1 col-auto" id="count">Players (13)</label>
       </div>
 
       <div class="form-row">
@@ -58,7 +58,7 @@
       <div class="form-row">
         <div class="mb-3 col-auto">
           <div id="warning"></div>
-          <textarea class="form-control" id="players" rows=7 cols=80>Minsoo, Yuram, Changyeop, Jungmoon, Jinho, Gura, Kyungran, Minseo, Poong, Sunggyu, Junseok, Sangmin, Eunji</textarea>
+          <textarea class="form-control" id="players" onchange="updatePlayerCount()" rows=7 cols=80>Minsoo, Yuram, Changyeop, Jungmoon, Jinho, Gura, Kyungran, Minseo, Poong, Sunggyu, Junseok, Sangmin, Eunji</textarea>
         </div>
       </div>
 
@@ -111,9 +111,15 @@ for (var i = 0; i < 16; i++) {
   }
 }
 
+function updatePlayerCount() {
+  text = document.getElementById("players").value;
+  players = text.split(", ");
+  document.getElementById("count").innerHTML = "Players (" + players.length + ")";
+}
+
 function init() {
   text = document.getElementById("players").value;
-  players = text.split(", ")
+  players = text.split(", ");
 
   warning = document.getElementById("warning");
   if (players.length != 13 && !document.getElementById('allowAnyNum').checked) {
@@ -391,15 +397,12 @@ function setPlayers(num) {
     document.getElementById("players").value = allArray.join(", ");
     document.getElementById("allowAnyNum").checked = true;
 
-  } else if (num == 100) {
-    var array = [...Array(100).keys()];
-
-    document.getElementById("players").value = array.join(", ");
-    document.getElementById("allowAnyNum").checked = true;
-
   } else {
     document.getElementById("players").value = playersArrays[num].join(", ");
   }
+
+  updatePlayerCount();
+
 }
 
 function noteResult(episode, type, player) {
