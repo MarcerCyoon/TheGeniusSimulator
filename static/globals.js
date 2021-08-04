@@ -130,6 +130,7 @@ const prefixArray = [
 	"Fruit",
 	"Spice",
 	"Truth",
+	"Dare",
 	"Confined",
 	"Scamming",
 	"Seed",
