@@ -176,6 +176,10 @@ const prefixArray = [
 	"Halo",
 	"Paradox",
 	"Element",
+	"Clone",
+	"Definitely Not",
+	"Welcome to the",
+	"Catch the",
 	"Murder",
 	"awa"
 ];
@@ -195,6 +199,9 @@ const suffixArray = [
 	"Yutnori",
 	"Game",
 	"Chain",
+	"Dungeon",
+	"Burglar",
+	"Dominion",
 	"Stand",
 	"Stock Market",
 	"Exchange",
@@ -204,6 +211,8 @@ const suffixArray = [
 	"Chess",
 	"Checkers",
 	"Tic-Tac-Toe",
+	"RPS",
+	"Dots and Boxes",
 	"Streak",
 	"Judgment",
 	"Commandments",
@@ -217,6 +226,7 @@ const suffixArray = [
 	"Loyalists",
 	"Criminals",
 	"Marathon",
+	"Basketball",
 	"Black and White", // meme black and white in both arrays
 	"Element", // meme element in both arrays
 	"Trouble",
@@ -245,6 +255,9 @@ function generateMainMatchName() {
 		if (chance < 16) {
 			// filter out ", pass" if >1 prefixes
 			suffixes = suffixArray.filter(suffix => !suffix.includes(","));
+		} else if (name.includes(" the")) {
+			// filter out all the ones with grammar if it name has "Welcome to the" or "Catch the"
+			suffixes = suffixArray.filter(suffix => !(suffix.includes(",") || suffix.includes("'s")));
 		}
 
 		num = getRandomInt(0, suffixes.length);
@@ -258,8 +271,9 @@ function generateMainMatchName() {
 
 	} else {
 		var nameArray = [];
+		var prefixes = prefixArray.filter(prefix => !(prefix.includes(" the")));
 		var suffixes = suffixArray.filter(suffix => !(suffix.includes(",") || suffix.includes("'s")));
-		var words = [...prefixArray, ...suffixes];
+		var words = [...prefixes, ...suffixes];
 
 		while (chance >= getRandomInt(0, 100)) {
 			num = getRandomInt(0, words.length);
