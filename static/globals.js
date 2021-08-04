@@ -116,6 +116,162 @@ const playersArrays = [
 	["Jungmoon", "Yeonseung", "Jinho", "Dongmin", "Kyunghoon", "Kyungran", "Yoohyun", "Junseok", "Sangmin", "Yohwan", "Yoonsun", "Hyunmin", "Junghyun"]
 ];
 
+const prefixArray = [
+	"Doubting",
+	"Cooperative",
+	"Horror",
+	"Blackout",
+	"Middle",
+	"Elevator",
+	"Expression",
+	"Garnet",
+	"Fruit",
+	"Confined",
+	"Scamming",
+	"Seed",
+	"Stormy",
+	"King",
+	"Election",
+	"Laser",
+	"Rotating",
+	"Abundance",
+	"1, 2, 3",
+	"Black and White",
+	"Minus",
+	"Apotheosis",
+	"Blockade",
+	"Winning",
+	"Unfair",
+	"Reverse",
+	"Open",
+	"Fish",
+	"Social",
+	"Crystal",
+	"Miner",
+	"Number",
+	"Mental",
+	"Painting",
+	"Grid",
+	"Marcer",
+	"Kong",
+	"Spirit",
+	"Zombie",
+	"Genius",
+	"Glitched",
+	"Ultimate",
+	"Euler",
+	"X"
+];
+
+const suffixArray = [
+	"Race",
+	"Thief",
+	"'s Dilemma",
+	", Pass",
+	"Poker",
+	"Auction",
+	"Yutnori",
+	"Game",
+	"Chain",
+	"Stand",
+	"Stock Market",
+	"Exchange",
+	"Maze",
+	"Janggi",
+	"Chess",
+	"Tic-Tac-Toe",
+	"Streak",
+	"Judgment",
+	"Commandments",
+	"Slingshot",
+	"Simulator",
+	"Shop",
+	"Hunt",
+	"Warfare",
+	"Snake"
+];
+
+function generateMainMatchName() {
+	var chance = 100;
+	var num;
+	var name;
+
+	// will generated name follow normal standards or "A and B" standards?
+	if (getRandomInt(0, 100) <= 85) {
+		name = "";
+		prefixes = [...prefixArray];
+
+		while (chance >= getRandomInt(0, 100)) {
+			num = getRandomInt(0, prefixes.length);
+			name += " " + retrieve(prefixes, num);
+			chance /= 6;
+		}
+
+		var suffixes = suffixArray;
+
+		if (chance < 16) {
+			// filter out ", pass" if >1 prefixes
+			suffixes = suffixArray.filter(suffix => !suffix.includes(","));
+		}
+
+		num = getRandomInt(0, suffixes.length);
+
+		// special case handling
+		if (!(suffixes[num].includes(",") || suffixes[num].includes("'"))) {
+			name += " "
+		}
+
+		name += suffixes[num];
+
+	} else {
+		var nameArray = [];
+		var suffixes = suffixArray.filter(suffix => !(suffix.includes(",") || suffix.includes("'")));
+		var words = [...prefixArray, ...suffixes];
+
+		while (chance >= getRandomInt(0, 100)) {
+			num = getRandomInt(0, words.length);
+			nameArray.push(retrieve(words, num));
+			chance /= 20;
+		}
+
+		num = getRandomInt(0, words.length);
+		nameArray.push(retrieve(words, num));
+
+		name = nameArray.join(" and ");
+	}
+
+	// small chance you get II or III added to the end of your game
+	if (getRandomInt(0, 100) <= 8) {
+		if (getRandomInt(0, 100) <= 30) {
+			name += " III";
+		} else {
+			name += " II";
+		}
+	}
+
+	return name.trim();
+}
+
+function generateMainMatch(players) {
+	var name = generateMainMatchName();
+	var maxTOL;
+	var num = getRandomInt(0, 100);
+
+	if (num <= 5) {
+		// decent chance that there will be 1 ToL
+		maxTOL = 1;
+	} else if (num <= 15) {
+		// chances of lots of tokens is low
+		maxTOL = getRandomInt((players - 1) / 2, players - 1);
+	} else {
+		maxTOL = getRandomInt(1, (players - 1) / 2);
+	}
+
+	var minTOL = getRandomInt(1, maxTOL + 1);
+
+	return new MainMatch(name, players, minTOL, maxTOL);
+}
+
 
 function retrieve(arr, num) {
   return arr.splice(num, 1)[0];
