@@ -177,6 +177,7 @@ const suffixArray = [
 	"Thief",
 	"'s Dilemma",
 	", Pass",
+	"Goofspiel",
 	"Poker",
 	"Hold'em",
 	"Auction",
@@ -189,6 +190,7 @@ const suffixArray = [
 	"Maze",
 	"Janggi",
 	"Chess",
+	"Checkers",
 	"Tic-Tac-Toe",
 	"Streak",
 	"Judgment",
@@ -231,7 +233,7 @@ function generateMainMatchName() {
 		num = getRandomInt(0, suffixes.length);
 
 		// special case handling
-		if (!(suffixes[num].includes(",") || suffixes[num].includes("'"))) {
+		if (!(suffixes[num].includes(",") || suffixes[num].includes("'s"))) {
 			name += " "
 		}
 
@@ -239,7 +241,7 @@ function generateMainMatchName() {
 
 	} else {
 		var nameArray = [];
-		var suffixes = suffixArray.filter(suffix => !(suffix.includes(",") || suffix.includes("'")));
+		var suffixes = suffixArray.filter(suffix => !(suffix.includes(",") || suffix.includes("'s")));
 		var words = [...prefixArray, ...suffixes];
 
 		while (chance >= getRandomInt(0, 100)) {
