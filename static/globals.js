@@ -169,13 +169,23 @@ const prefixArray = [
 	"Monopoly",
 	"Seat",
 	"Constellation",
-	"Big Deal"
+	"Big Deal",
+	"Losing",
+	"Exploding",
+	"Double-sided",
+	"Halo",
+	"Paradox",
+	"Element",
+	"awa"
 ];
 
 const suffixArray = [
 	"Race",
 	"Thief",
 	"'s Dilemma",
+	"Dilemma",
+	"'s Court",
+	"Court",
 	", Pass",
 	"Goofspiel",
 	"Poker",
@@ -188,6 +198,7 @@ const suffixArray = [
 	"Stock Market",
 	"Exchange",
 	"Maze",
+	"Labyrinth",
 	"Janggi",
 	"Chess",
 	"Checkers",
@@ -204,7 +215,11 @@ const suffixArray = [
 	"Rebels",
 	"Loyalists",
 	"Criminals",
-	"Marathon"
+	"Marathon",
+	"Black and White", // meme black and white in both arrays
+	"Element", // meme element in both arrays
+	"Trouble",
+	"Quattro"
 ];
 
 function generateMainMatchName() {
