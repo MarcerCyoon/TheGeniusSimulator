@@ -116,6 +116,11 @@ const playersArrays = [
 	["Jungmoon", "Yeonseung", "Jinho", "Dongmin", "Kyunghoon", "Kyungran", "Yoohyun", "Junseok", "Sangmin", "Yohwan", "Yoonsun", "Hyunmin", "Junghyun"]
 ];
 
+
+function retrieve(arr, num) {
+  return arr.splice(num, 1)[0];
+}
+
 function getRandomInt(min, max) {
   min = Math.ceil(min);
   max = Math.floor(max);
