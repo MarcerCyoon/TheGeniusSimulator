@@ -188,7 +188,9 @@ const suffixArray = [
 	"Shop",
 	"Hunt",
 	"Warfare",
-	"Snake"
+	"Snake",
+	"Rebels",
+	"Loyalists"
 ];
 
 function generateMainMatchName() {
