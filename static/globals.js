@@ -126,6 +126,7 @@ const prefixArray = [
 	"Expression",
 	"Garnet",
 	"Fruit",
+	"Spice",
 	"Confined",
 	"Scamming",
 	"Seed",
@@ -181,6 +182,7 @@ const prefixArray = [
 	"Welcome to the",
 	"Catch the",
 	"Murder",
+	"Squeaky",
 	"awa"
 ];
 
@@ -191,10 +193,13 @@ const suffixArray = [
 	"Dilemma",
 	"'s Court",
 	"Court",
+	"'s Count",
+	"Count",
 	", Pass",
 	"Goofspiel",
 	"Poker",
 	"Hold'em",
+	"Roulette",
 	"Auction",
 	"Yutnori",
 	"Game",
