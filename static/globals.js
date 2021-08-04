@@ -145,6 +145,7 @@ const prefixArray = [
 	"Reverse",
 	"Open",
 	"Fish",
+	"Food",
 	"Social",
 	"Crystal",
 	"Miner",
@@ -160,7 +161,10 @@ const prefixArray = [
 	"Glitched",
 	"Ultimate",
 	"Euler",
-	"X"
+	"X",
+	"Chill",
+	"Betting",
+	"Opal"
 ];
 
 const suffixArray = [
@@ -190,7 +194,9 @@ const suffixArray = [
 	"Warfare",
 	"Snake",
 	"Rebels",
-	"Loyalists"
+	"Loyalists",
+	"Criminals",
+	"Marathon"
 ];
 
 function generateMainMatchName() {
