@@ -39,11 +39,18 @@
           <button type="button" class="btn btn-info dropdown-toggle" id="dropdownDefaults" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             Defaults...
           </button>
+          <div class="form-check form-check-inline ml-1">
+            <input class="form-check-input" type="checkbox" value="" id="allowAnyNum">
+            <label class="form-check-label" for="allowAnyNum">
+              Allow any number of players
+            </label>
+          </div>
           <div class="dropdown-menu" aria-labelledby="dropdownDefaults">
             <button type="button" class="dropdown-item" onclick="setPlayers(0)">The Genius S1</a>
             <button type="button" class="dropdown-item" onclick="setPlayers(1)">The Genius S2</a>
             <button type="button" class="dropdown-item" onclick="setPlayers(2)">The Genius S3</a>
             <button type="button" class="dropdown-item" onclick="setPlayers(3)">The Genius S4</a>
+            <button type="button" class="dropdown-item" onclick="setPlayers(-1)">All The Genius</a>
           </div>
         </div>
       </div>
@@ -87,10 +94,11 @@ var episode = 1;
 var placements = [];
 var dmParticipants;
 var finalScore = 0;
-var tableData = new Array(16);
+var length = 13;
+var tableData = new Array(players.length + 3);
 
 for (var i = 0; i < 16; i++) {
-  tableData[i] = new Array(15);
+  tableData[i] = new Array(players.length + 2);
 
   if (i == 0) {
     tableData[i][0] = "#";
@@ -108,7 +116,7 @@ function init() {
   players = text.split(", ")
 
   warning = document.getElementById("warning");
-  if (players.length != 13) {
+  if (players.length != 13 && !document.getElementById('allowAnyNum').checked) {
     warning.innerHTML = "The Genius needs 13 players! Currently you have " + players.length + ".";
 
     if (!warning.classList.contains("mb-2")) {
@@ -135,10 +143,11 @@ function init() {
   episode = 1;
   placements = [];
   finalScore = 0;
-  tableData = new Array(3 + players.length);
+  tableData = new Array(players.length + 3);
+  length = players.length;
 
-  for (var i = 0; i < 3 + players.length; i++) {
-    tableData[i] = new Array(15);
+  for (var i = 0; i < players.length + 3; i++) {
+    tableData[i] = new Array(players.length + 2);
 
     if (i == 0) {
       tableData[i][0] = "#";
@@ -162,14 +171,22 @@ function simulate() {
 
   switch (phase) {
     case 0:
-      var possibleMMs = mmArray.filter(mm => mm.episode == episode);
-      var mmChoice = getRandomInt(0, possibleMMs.length);
-      numWinners = possibleMMs[mmChoice].TOLs;
+      var possibleMMs = mmArray.filter(mm => mm.players == players.length);
+      var mm;
+
+      if (possibleMMs.length == 0 || getRandomInt(0, 100) <= 5) {
+        mm = generateMainMatch(players.length);
+      } else {
+        var mmChoice = getRandomInt(0, possibleMMs.length);
+        mm = possibleMMs[mmChoice];
+      }
+
+      numWinners = mm.TOLs;
       // Create copy so that you can manipulate and retrieve without
       // changing original list.
       playersCopy = [...players];
 
-      titleText = "Main Match " + episode + ": " + possibleMMs[mmChoice].name + "\n";
+      titleText = "Main Match " + episode + ": " + mm.name + "\n";
       announceText += players.length + " players remain:\n";
 
       for (player of players) {
@@ -177,12 +194,12 @@ function simulate() {
       }
 
       tableData[0][episode] = "EP" + episode;
-      tableData[1][episode] = possibleMMs[mmChoice].name;
+      tableData[1][episode] = mm.name;
       phase++;
       break;
 
     case 1:
-    var winners = [];
+      var winners = [];
       for (var i = 0; i < numWinners; i++) {
         var winner = retrieve(playersCopy, getRandomInt(0, playersCopy.length));
         winners.push(winner);
@@ -194,8 +211,8 @@ function simulate() {
       if (numWinners == 1) {
         announceText += "The MM winner is " + winnerText + ".\n";
 
-        // Give out extra TOL only if there is a sole winner, and it's not episode 10/11.
-        if (episode < 10) {
+        // Give out extra TOL only if there is a sole winner, and it's not F4 or F3.
+        if (players.length > 4) {
           var immunity = retrieve(playersCopy, getRandomInt(0, playersCopy.length));
           announceText += winner + " gives their second Token of Life to " + immunity + "." + "\n";
           noteResult(episode, "IMM", immunity);
@@ -251,7 +268,7 @@ function simulate() {
 
       episode++;
 
-      if (episode == 12) {
+      if (players.length == 2) {
         phase++;
       } else {
         phase = 0;
@@ -275,7 +292,7 @@ function simulate() {
       break;
 
     case 6:
-      var match = episode - 11;
+      var match = episode - placements.length;
       var fmChoice = getRandomInt(0, dmArray.length);
       titleText = "Final Match " + match + ": " + dmArray[fmChoice] + "\n";
       announceText += players[0] + " vs. " + players[1] + "\n";
@@ -298,7 +315,7 @@ function simulate() {
     case 7:
       var fmWinner = getRandomInt(0, 2);
       var fmLoser = 1 - fmWinner;
-      var match = episode - 11;
+      var match = episode - placements.length;
 
       announceText += players[fmWinner] + " wins FM" + match + " against " + players[fmLoser] + "." + "\n";
 
@@ -316,6 +333,8 @@ function simulate() {
 
         placements.push(players[fmLoser]);
         placements.push(players[fmWinner]);
+        // hacky reset of players to guarantee chart generation
+        players = [];
 
         announceText += "Congratulations!" + "\n";
 
@@ -328,6 +347,8 @@ function simulate() {
 
         placements.push(players[fmLoser]);
         placements.push(players[fmWinner]);
+        // hacky reset of players to guarantee chart generation
+        players = [];
 
         announceText += "Congratulations!" + "\n";
 
@@ -352,18 +373,38 @@ function simulate() {
   }
 
 
-  if (placements.length == 13) {
+  if (players.length == 0) {
     makeResults();
   }
 }
 
 function setPlayers(num) {
-  document.getElementById("players").value = playersArrays[num].join(", ");
+  if (num == -1) {
+    var allArray = [];
+    for (playerArray of playersArrays) {
+      allArray.push(...playerArray);
+    }
+
+    // remove duplicates
+    allArray = [...new Set(allArray)];
+
+    document.getElementById("players").value = allArray.join(", ");
+    document.getElementById("allowAnyNum").checked = true;
+
+  } else if (num == 100) {
+    var array = [...Array(100).keys()];
+
+    document.getElementById("players").value = array.join(", ");
+    document.getElementById("allowAnyNum").checked = true;
+
+  } else {
+    document.getElementById("players").value = playersArrays[num].join(", ");
+  }
 }
 
 function noteResult(episode, type, player) {
   // Note a result on the tableData.
-  for (var i = 3; i < 17; i++) {
+  for (var i = 3; i < length + 4; i++) {
     if (tableData[i][0] == player) {
       tableData[i][episode] = type;
       break;
@@ -398,7 +439,7 @@ function makeResults() {
       if (j == 0) {
         cell.classList.add("first");
         cell.classList.add("divider-col");
-      } else if (j == 11) {
+      } else if (j == length - 2) {
         cell.classList.add("divider-col");
       }
 
