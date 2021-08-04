@@ -1,7 +1,7 @@
 class MainMatch {
-	constructor(name, episode, minTOL, maxTOL) {
+	constructor(name, players, minTOL, maxTOL) {
 		this.name = name;
-		this.episode = episode;
+		this.players = players;
 		this.minTOL = minTOL; // minTOLs, excluding ties.
 
 		if (maxTOL >= minTOL) {
@@ -35,9 +35,8 @@ class MainMatch {
 		}
 
 		// Don't accidentally hand out more TOLs than players and make sure two always don't have TOLs
-		return Math.min(num, 12 - this.episode);
+		return Math.min(num, this.players - 2);
 	}
-
 }
 
 const dmArray = [
@@ -64,50 +63,50 @@ const dmArray = [
 ];
 
 const mmArray = [
-	new MainMatch("123 Game", 1, 1, 1),
-	new MainMatch("Food Chain", 1, 1, 9),
-	new MainMatch("Fruit Stand", 1, 1, 1),
-	new MainMatch("ID Exchange", 1, 1, 1),
-	new MainMatch("Election Game", 2, 1, 1),
-	new MainMatch("Seat Exchange", 2, 5, 5),
-	new MainMatch("Jury Game", 2, 5, 7), // should only be 5 or 7 but currently no support.
-	new MainMatch("Horror Race", 2, 1, 1),
-	new MainMatch("Abundance and Famine", 3, 1, 1),
-	new MainMatch("King Game", 3, 1, 1),
-	new MainMatch("Middle Race", 3, 9, 9),
-	new MainMatch("Today's Menu", 3, 1, 1),
-	new MainMatch("Zombie Game", 4, 1, 8),
-	new MainMatch("Blackout Game", 4, 5, 5),
-	new MainMatch("Swords and Shields", 4, 5, 5),
-	new MainMatch("Fish Shop", 4, 1, 1),
-	new MainMatch("Scamming Horse Race", 5, 1, 1),
-	new MainMatch("7 Commandments", 5, 1, 1),
-	new MainMatch("Miner Game", 5, 1, 1),
-	new MainMatch("Loyalists and Rebels", 5, 1, 1),
-	new MainMatch("Catch the Burglar", 6, 1, 2), // I hate this game.
-	new MainMatch("Monopoly Game", 6, 1, 1),
-	new MainMatch("Stormy Stock Market", 6, 1, 1),
-	new MainMatch("Garnet Thief", 6, 1, 1),
+	new MainMatch("1, 2, 3 Game", 13, 1, 1),
+	new MainMatch("Food Chain", 13, 1, 9),
+	new MainMatch("Fruit Stand", 13, 1, 1),
+	new MainMatch("ID Exchange", 13, 1, 1),
+	new MainMatch("Election Game", 12, 1, 1),
+	new MainMatch("Seat Exchange", 12, 5, 5),
+	new MainMatch("Jury Game", 12, 5, 7), // should only be 5 or 7 but currently no support.
+	new MainMatch("Horror Race", 12, 1, 1),
+	new MainMatch("Abundance and Famine", 11, 1, 1),
+	new MainMatch("King Game", 11, 1, 1),
+	new MainMatch("Middle Race", 11, 9, 9),
+	new MainMatch("Today's Menu", 11, 1, 1),
+	new MainMatch("Zombie Game", 10, 1, 8),
+	new MainMatch("Blackout Game", 10, 5, 5),
+	new MainMatch("Swords and Shields", 10, 5, 5),
+	new MainMatch("Fish Shop", 10, 1, 1),
+	new MainMatch("Scamming Horse Race", 9, 1, 1),
+	new MainMatch("7 Commandments", 9, 1, 1),
+	new MainMatch("Miner Game", 9, 1, 1),
+	new MainMatch("Loyalists and Rebels", 9, 1, 1),
+	new MainMatch("Catch the Burglar", 8, 1, 2), // I hate this game.
+	new MainMatch("Monopoly Game", 8, 1, 1),
+	new MainMatch("Stormy Stock Market", 8, 1, 1),
+	new MainMatch("Garnet Thief", 8, 1, 1),
 	new MainMatch("Open, Pass", 7, 1, 1),
 	new MainMatch("God's Judgment", 7, 1, 1),
 	new MainMatch("Constellation Game", 7, 1, 1),
 	new MainMatch("Seed Poker", 7, 1, 1),
-	new MainMatch("Kong's Dilemma", 8, 1, 3),
-	new MainMatch("Minus Auction", 8, 1, 1),
-	new MainMatch("Investment and Donation", 8, 1, 1),
-	new MainMatch("Minus Auction II", 8, 1, 1),
-	new MainMatch("Expression Auction", 9, 1, 1),
-	new MainMatch("Layoff", 9, 1, 3),
-	new MainMatch("Middle Race II", 9, 1, 1),
-	new MainMatch("Horror Race II", 9, 1, 1),
-	new MainMatch("Confined Scamming Horse Race", 10, 2, 2),
-	new MainMatch("Big Deal Game", 10, 1, 1),
-	new MainMatch("Chain Auction", 10, 1, 1),
-	new MainMatch("Cooperative Hold'em", 10, 1, 1),
-	new MainMatch("5:5 Game", 11, 1, 1),
-	new MainMatch("Elevator Game", 11, 1, 1),
-	new MainMatch("Doubting Yutnori", 11, 1, 1),
-	new MainMatch("How Much?", 11, 1, 1)
+	new MainMatch("Kong's Dilemma", 6, 1, 3),
+	new MainMatch("Minus Auction", 6, 1, 1),
+	new MainMatch("Investment and Donation", 6, 1, 1),
+	new MainMatch("Minus Auction II", 6, 1, 1),
+	new MainMatch("Expression Auction", 5, 1, 1),
+	new MainMatch("Layoff", 5, 1, 3),
+	new MainMatch("Middle Race II", 5, 1, 1),
+	new MainMatch("Horror Race II", 5, 1, 1),
+	new MainMatch("Confined Scamming Horse Race", 4, 2, 2),
+	new MainMatch("Big Deal Game", 4, 1, 1),
+	new MainMatch("Chain Auction", 4, 1, 1),
+	new MainMatch("Cooperative Hold'em", 4, 1, 1),
+	new MainMatch("5:5 Game", 3, 1, 1),
+	new MainMatch("Elevator Game", 3, 1, 1),
+	new MainMatch("Doubting Yutnori", 3, 1, 1),
+	new MainMatch("How Much?", 3, 1, 1)
 ];
 
 const playersArrays = [
