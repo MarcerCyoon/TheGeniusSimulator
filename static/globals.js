@@ -125,7 +125,6 @@ const prefixArray = [
 	"Middle",
 	"Elevator",
 	"Expression",
-	"Indian",
 	"Chain",
 	"Garnet",
 	"Fruit",
@@ -146,6 +145,10 @@ const prefixArray = [
 	"1, 2, 3",
 	"Black and White",
 	"Dissenting",
+	"Indian",
+	"American",
+	"Korean",
+	"Russian",
 	"All-In",
 	"Plus",
 	"Minus",
@@ -155,10 +158,14 @@ const prefixArray = [
 	"Losing",
 	"Restricted",
 	"Sliding",
+	"Bribing",
 	"Unfair",
 	"Reverse",
 	"Misére",
 	"Open",
+	"Public",
+	"Private",
+	"Virtual",
 	"Fish",
 	"Food",
 	"Image",
@@ -170,7 +177,9 @@ const prefixArray = [
 	"Mental",
 	"Painting",
 	"Grid",
-	"Marcer",
+	"Placebo",
+	"Nocebo",
+	"Kong's",
 	"Kong",
 	"Spirit",
 	"Jury",
@@ -180,6 +189,7 @@ const prefixArray = [
 	"Ultimate",
 	"Euler",
 	"X",
+	"Marcer",
 	"ID",
 	"Chill",
 	"Betting",
@@ -193,6 +203,9 @@ const prefixArray = [
 	"Domino",
 	"Blind",
 	"Atomic",
+	"Modular",
+	"Quick",
+	"Bullet",
 	"Pathing",
 	"Today's",
 	"Yesterday's",
@@ -216,7 +229,9 @@ const prefixArray = [
 	"Tile",
 	"Constellation",
 	"Big Deal",
+	"Far Out",
 	"Team",
+	"District",
 	"Partner",
 	"Exploding",
 	"Investment",
@@ -253,6 +268,7 @@ const prefixArray = [
 	"Farming",
 	"Submarine",
 	"Horse",
+	"Boat",
 	"Dragon",
 	"Wyvern",
 	"Wizard",
@@ -264,6 +280,8 @@ const prefixArray = [
 	"Shield",
 	"Universal",
 	"Galaxy",
+	"Ice",
+	"Fire",
 	"White",
 	"Black",
 	"Red",
@@ -286,6 +304,7 @@ const suffixArray = [
 	"Court",
 	"'s Count",
 	"Count",
+	"Open, Pass",
 	", Pass",
 	"Menu",
 	"Goofspiel",
@@ -295,6 +314,7 @@ const suffixArray = [
 	"Auction",
 	"Draft",
 	"Sign",
+	"Set",
 	"Hopping",
 	"Square",
 	"Squares",
@@ -310,32 +330,40 @@ const suffixArray = [
 	"Block",
 	"Game",
 	"Speedrun",
+	"Circuit",
 	"Chain",
 	"Tournament",
 	"Invitational",
 	"Plunder",
 	"Dungeon",
+	"Bubble",
 	"Escape",
 	"Burglar",
 	"Dominion",
+	"Pandemic",
 	"Allegiance",
 	"Stand",
+	"Market",
 	"Stock Market",
 	"Exchange",
+	"Mansion",
 	"Maze",
 	"Labyrinth",
 	"Janggi",
 	"Ur",
 	"Yutnori",
 	"Gomoku",
+	"Sudoku",
 	"Chess",
 	"Checkers",
 	"Chutes and Ladders",
 	"Battleship",
 	"Tic-Tac-Toe",
+	"-Tac-Toe",
 	"RPS",
 	"Dots and Boxes",
 	"Connect Four",
+	"Bridge",
 	"Monorail",
 	"Nim",
 	"Tetris",
@@ -358,6 +386,7 @@ const suffixArray = [
 	"Gamble",
 	"Trick",
 	"Ways",
+	"Struggle",
 	"Tactics",
 	"Expedition",
 	"Hunt",
@@ -369,7 +398,9 @@ const suffixArray = [
 	"Battle Royale",
 	"Snake",
 	"Rebels",
+	"Killers",
 	"Loyalists",
+	"Detectives",
 	"Criminals",
 	"Mafia",
 	"Marathon",
@@ -395,7 +426,7 @@ function generateMainMatchName() {
 	// will generated name follow normal standards or "A and B" standards?
 	if (getRandomInt(0, 100) <= 85) {
 		name = "";
-		prefixes = [...prefixArray];
+		var prefixes = [...prefixArray];
 
 		while (chance >= getRandomInt(0, 100)) {
 			num = getRandomInt(0, prefixes.length);
@@ -407,16 +438,16 @@ function generateMainMatchName() {
 
 		if (chance < 16) {
 			// filter out ", pass" if >1 prefixes
-			suffixes = suffixArray.filter(suffix => !suffix.includes(","));
+			suffixes = suffixArray.filter(suffix => !suffix.startsWith(","));
 		} else if (name.includes(" the") || name.includes("'s")) {
 			// filter out all the ones with grammar if name has "Welcome to the" or "Catch the" or a "'s"
-			suffixes = suffixArray.filter(suffix => !(suffix.includes(",") || suffix.includes("'s")));
+			suffixes = suffixArray.filter(suffix => !(suffix.startsWith(",") || suffix.includes("'s") || suffix.startsWith("-")));
 		}
 
 		num = getRandomInt(0, suffixes.length);
 
 		// special case handling
-		if (!(suffixes[num].includes(",") || suffixes[num].includes("'s"))) {
+		if (!(suffixes[num].startsWith(",") || suffixes[num].includes("'s") || suffixes[num].startsWith("-"))) {
 			name += " "
 		}
 
@@ -425,7 +456,7 @@ function generateMainMatchName() {
 	} else {
 		var nameArray = [];
 		var prefixes = prefixArray.filter(prefix => !(prefix.includes(" the") || prefix.includes("'s")));
-		var suffixes = suffixArray.filter(suffix => !(suffix.includes(",") || suffix.includes("'s")));
+		var suffixes = suffixArray.filter(suffix => !(suffix.startsWith(",") || suffix.includes("'s") || suffix.startsWith("-")));
 		var words = [...prefixes, ...suffixes];
 
 		while (chance >= getRandomInt(0, 100)) {
@@ -437,7 +468,12 @@ function generateMainMatchName() {
 		num = getRandomInt(0, words.length);
 		nameArray.push(retrieve(words, num));
 
-		name = nameArray.join(" and ");
+		if (getRandomInt(0, 100) <= 70) {
+			name = nameArray.join(" and ");
+		} else {
+			name = nameArray.join(" or ");
+		}
+
 	}
 
 	// small chance you get II, III, or Redux added to the end of your game
