@@ -116,6 +116,12 @@ const playersArrays = [
 	["Jungmoon", "Yeonseung", "Jinho", "Dongmin", "Kyunghoon", "Kyungran", "Yoohyun", "Junseok", "Sangmin", "Yohwan", "Yoonsun", "Hyunmin", "Junghyun"]
 ];
 
+const commArrays = [
+	["Isa", "Deusovi", "Jihyo", "Jiffa", "e_is_cool", "chaotic_iak", "relay400", "Meladog", "Heol", "RedsToad", "VicariousShaner", "AZNDEVIL", "MathTurtle"],
+	["Penzo", "jkittykitkat", "robert", "Liridium", "tiac", "Rosa", "Meg", "Zacho", "Chargestone96", "Icecube", "pseudonam", "Yoshi", "someguy"],
+	["Jackson", "Abi", "Hedger", "Rexxy", "Drey", "Hyeonmu", "infinitejester00", "Isa", "Six", "SoftServe", "powerofdeath", "Crobat", "Jiffa"]
+]
+
 const prefixArray = [
 	"Doubting",
 	"Cooperative",
@@ -546,4 +552,47 @@ function getRandomInt(min, max) {
   max = Math.floor(max);
   // The maximum is exclusive and the minimum is inclusive
   return Math.floor(Math.random() * (max - min)) + min;
+}
+
+// get index of the element in arr that corresponds to the value when arr is summed
+// if arr are [5, 6, 1], then rolling anything (0, 5) is 0, (5, 11) is 1, (11, 12) is 2.
+function getSumIndex(arr, value) {
+	var sum = 0;
+	for (var i = 0; i < arr.length; i++) {
+		sum += arr[i];
+		if (value < sum) {
+			return i;
+		}
+	}
+	// return end index if escapes for loop
+	return arr.length - 1;
+}
+
+
+// from https://sebhastian.com/javascript-csv-to-array/
+function csvToArray(str, delimiter = ",") {
+  // slice from start of text to the first \n index
+  // use split to create an array from string by delimiter
+  const headers = str.slice(0, str.indexOf("\n")).split(delimiter);
+
+  // slice from \n index + 1 to the end of the text
+  // use split to create an array of each csv value row
+  const rows = str.slice(str.indexOf("\n") + 1).split("\n");
+
+  // Map the rows
+  // split values from each row into an array
+  // use headers.reduce to create an object
+  // object properties derived from headers:values
+  // the object passed as an element of the array
+  const arr = rows.map(function (row) {
+    const values = row.split(delimiter);
+    const el = headers.reduce(function (object, header, index) {
+      object[header] = values[index];
+      return object;
+    }, {});
+    return el;
+  });
+
+  // return the array
+  return arr;
 }
