@@ -25,7 +25,7 @@
         </li>
 
         <li class="nav-item mr-md-3">
-          <a class="navbar-link" href="./index.html" style="color: white;">Reset</a>
+          <a class="navbar-link" href="./community.html" style="color: white;">Reset</a>
         </li>
 
       </ul>
@@ -68,6 +68,7 @@
       <a type="button" class="btn btn-primary btn-lg disabled" id="sim" onclick="simulate()" aria-disabled="true">Simulate!</a>
       <div class="mt-2"></div>
       <button type="button" class="btn btn-secondary" onclick="init()">INITIALIZE</button>
+      <button type="button" class = "btn btn-info" onclick="simToEnd()">SIM TO END</button>
 
       <div id="title" class="mt-3"></div>
       <div id="announcements" class="mt-1 mb-3"></div>
@@ -136,6 +137,16 @@ function updatePlayerCount() {
   text = document.getElementById("players").value;
   players = text.split(", ");
   document.getElementById("count").innerHTML = "Players (" + players.length + ")";
+}
+
+function simToEnd() {
+  if (players.length == 0) {
+    init();
+  }
+  
+  while (players.length != 0) {
+    simulate();
+  }
 }
 
 function init() {
