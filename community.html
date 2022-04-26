@@ -120,14 +120,14 @@ class Player {
     if (dm_rate == "Never in DM") {
       this.dm_rate = 50.0;
     } else {
-      this.dm_rate = Number.parseFloat(dm_rate.replace("%", ""));
+      this.dm_rate = Math.min(100.0, Number.parseFloat(dm_rate.replace("%", "")));
     }
-		this.mm_rate = Number.parseFloat(mm_rate.replace("%", ""));
+		this.mm_rate = Math.min(100.0, Number.parseFloat(mm_rate.replace("%", "")));
 
     if (dodge_rate == "Always immune") {
       this.dodge_rate == 50.0;
     } else {
-      this.dodge_rate = Number.parseFloat(dodge_rate.replace("%", ""));
+      this.dodge_rate = Math.min(100.0, Number.parseFloat(dodge_rate.replace("%", "")));
     }
   }
 }
