@@ -119,7 +119,11 @@ const playersArrays = [
 const commArrays = [
 	["Isa", "Deusovi", "Jihyo", "Jiffa", "e_is_cool", "chaotic_iak", "relay400", "Meladog", "Heol", "RedsToad", "VicariousShaner", "AZNDEVIL", "MathTurtle"],
 	["Penzo", "jkittykitkat", "robert", "Liridium", "tiac", "Rosa", "Meg", "Zacho", "Chargestone96", "Icecube", "pseudonam", "Yoshi", "someguy"],
-	["Jackson", "Abi", "Hedger", "Rexxy", "Drey", "Hyeonmu", "infinitejester00", "Isa", "Six", "SoftServe", "powerofdeath", "Crobat", "Jiffa"]
+	["Jackson", "Abi", "Hedger", "Rexxy", "Drey", "Hyeonmu", "infinitejester00", "Isa", "Six", "SoftServe", "powerofdeath", "Crobat", "Jiffa"],
+	["Xanth", "Orthuss", "kaycali86", "Konstantinos", "Shadow", "Lexicat", "Deusovi", "Smocke", "Icecube", "Andrew", "Frionel", "MathTurtle", "Numbers"],
+	["MarcerMercer", "Liridium", "RedsToad", "pixie", "Grunkle Squeaky", "Craig", "jkittykitkat", "wikkiden", "Piggy", "Jet", "Chaotic", "Sapphireonice", "Simoz"],
+	["Maddie", "Sally", "Da Letter El", "Lexicat", "Chaotic", "Scarlet", "SFGiantsFan", "Aslyui", "Benji", "Radja", "JohnAlwin", "beanz222", "MathTurtle"],
+	["jakkdl", "Da Letter El", "mado55", "e_is_cool", "Tiac", "Sally", "Zero", "Kevin", "Ethy", "Jackson", "Spadez", "Toby", "Tripado"]
 ]
 
 const prefixArray = [
