@@ -123,14 +123,14 @@ class Player {
   constructor(name, dm_rate, mm_rate, dodge_rate, safe_rate) {
 		this.name = name;
     if (dm_rate == "Never in DM") {
-      this.dm_rate = 50.0;
+      this.dm_rate = 37.0;
     } else {
       this.dm_rate = Math.min(100.0, Number.parseFloat(dm_rate.replace("%", "")));
     }
 		this.mm_rate = Math.min(100.0, Number.parseFloat(mm_rate.replace("%", "")));
 
     if (dodge_rate == "Always immune") {
-      this.dodge_rate == 50.0;
+      this.dodge_rate == 100.0;
     } else {
       this.dodge_rate = Math.min(100.0, Number.parseFloat(dodge_rate.replace("%", "")));
     }
