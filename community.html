@@ -439,8 +439,8 @@ function simulate() {
     case 7:
       var item_sum = itemCount.reduce((partialSum, a) => partialSum + a, 0);
       var fm_chances = [(players[0].dm_rate + 5) * (itemCount[0] + item_sum / item_sum), (players[1].dm_rate + 5) * (itemCount[1] + item_sum / item_sum)];
-      console.log(players);
-      console.log(fm_chances);
+      //console.log(players);
+      //console.log(fm_chances);
       var value = getRandomInt(0, Math.floor(fm_chances.reduce((partialSum, a) => partialSum + a, 0)));
       var fmWinner = getSumIndex(fm_chances, value);
       var fmLoser = 1 - fmWinner;
