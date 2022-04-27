@@ -123,7 +123,8 @@ const commArrays = [
 	["Xanth", "Orthuss", "kaycali86", "Konstantinos", "Shadow", "Lexicat", "Deusovi", "Smocke", "Icecube", "Andrew", "Frionel", "MathTurtle", "Numbers"],
 	["MarcerMercer", "Liridium", "RedsToad", "pixie", "Grunkle Squeaky", "Craig", "jkittykitkat", "wikkiden", "Piggy", "Jet", "Chaotic", "Sapphireonice", "Simoz"],
 	["Maddie", "Sally", "Da Letter El", "Lexicat", "Chaotic", "Scarlet", "SFGiantsFan", "Aslyui", "Benji", "Radja", "JohnAlwin", "beanz222", "MathTurtle"],
-	["jakkdl", "Da Letter El", "mado55", "e_is_cool", "Tiac", "Sally", "Zero", "Kevin", "Ethy", "Jackson", "Spadez", "Toby", "Tripado"]
+	["jakkdl", "Da Letter El", "mado55", "e_is_cool", "Tiac", "Sally", "Zero", "Kevin", "Ethy", "Jackson", "Spadez", "Toby", "Tripado"],
+	["VicariousShaner", "Isa", "Rhys", "Nevaeh", "Landon", "Teal", "JohnAlwin", "Jiffa", "hazard", "rozes", "Swiggle", "Vijay", "Chazza647"]
 ]
 
 const prefixArray = [
