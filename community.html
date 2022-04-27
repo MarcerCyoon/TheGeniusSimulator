@@ -104,6 +104,7 @@ var dmParticipants;
 var finalScore = 0;
 var length = 13;
 var tableData = new Array(players.length + 3);
+var itemCount = [0, 0];
 
 for (var i = 0; i < 16; i++) {
   tableData[i] = new Array(players.length + 2);
@@ -320,7 +321,7 @@ function simulate() {
 
         var dodge_chances = [];
         for (player of playersCopy) {
-          dodge_chances.push((100 - player.dodge_rate) + 5);
+          dodge_chances.push(100 - player.dodge_rate + 5);
         }
 
         var value = getRandomInt(0, Math.floor(dodge_chances.reduce((partialSum, a) => partialSum + a, 0)));
@@ -386,10 +387,25 @@ function simulate() {
     case 5:
       titleText = "Finals: Supporters' Choices\n";
 
-      var itemCount = [0, 0];
+      itemCount = [0, 0];
+      var item_chances = [];
 
+      for (player of players) {
+        safe_and_dodge_eps = (episode - 1) - (getResults("DMO", player.name) + getResults("EC", player.name));
+        item_chances.push((safe_and_dodge_eps / (episode - 1) * 20)); // this 20 was chosen arbitrarily.
+      }
+
+      if (item_chances[0] > item_chances[1]) {
+        item_chances[1] = 50 - item_chances[0];
+        item_chances[0] = 50 + item_chances[0];
+      } else {
+        item_chances[0] = 50 - item_chances[1];
+        item_chances[1] = 50 + item_chances[1];
+      }
+      
       for (player of placements) {
-        var choice = getRandomInt(0, 2);
+        var value = getRandomInt(0, Math.floor(item_chances.reduce((partialSum, a) => partialSum + a, 0)));
+        var choice = getSumIndex(item_chances, value);
         announceText += player.name + " chooses to support " + players[choice].name + " in the Finals.\n";
         noteResult(episode, players[choice].name, player.name);
         itemCount[choice]++;
@@ -421,7 +437,10 @@ function simulate() {
       break;
 
     case 7:
-      var fm_chances = [players[0].dm_rate + 5, players[1].dm_rate + 5];
+      var item_sum = itemCount.reduce((partialSum, a) => partialSum + a, 0);
+      var fm_chances = [(players[0].dm_rate + 5) * (itemCount[0] + item_sum / item_sum), (players[1].dm_rate + 5) * (itemCount[1] + item_sum / item_sum)];
+      console.log(players);
+      console.log(fm_chances);
       var value = getRandomInt(0, Math.floor(fm_chances.reduce((partialSum, a) => partialSum + a, 0)));
       var fmWinner = getSumIndex(fm_chances, value);
       var fmLoser = 1 - fmWinner;
@@ -517,6 +536,22 @@ function noteResult(episode, type, player) {
       break;
     }
   }
+}
+
+function getResults(type, player) {
+  // Get the occurrences of a type of result in tableData for a player.
+  var count = 0;
+  for (var i = 3; i < length + 4; i++) {
+    if (tableData[i][0] == player) {
+      for (var j = 0; j < tableData[i].length; j++) {
+        if (tableData[i][j] == type) {
+          count += 1;
+        }
+      }
+      break;
+    }
+  }
+  return count;
 }
 
 function resetResults() {
