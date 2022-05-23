@@ -547,6 +547,19 @@ function generateMainMatch(players) {
 	return new MainMatch(name, players, minTOL, maxTOL);
 }
 
+function generateDeathMatch() {
+	var num = getRandomInt(0, 100);
+
+	if (num <= 25) {
+		var name = generateMainMatchName();
+	} else {
+		var dmChoice = getRandomInt(0, dmArray.length);
+		var name = dmArray[dmChoice];
+	}
+	
+	return name;
+}
+
 
 function retrieve(arr, num) {
   return arr.splice(num, 1)[0];

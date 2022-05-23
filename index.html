@@ -195,7 +195,7 @@ function simulate() {
       var possibleMMs = mmArray.filter(mm => mm.players == players.length);
       var mm;
 
-      if (possibleMMs.length == 0 || getRandomInt(0, 100) <= 5) {
+      if (possibleMMs.length == 0 || getRandomInt(0, 100) <= 20) {
         mm = generateMainMatch(players.length);
       } else {
         var mmChoice = getRandomInt(0, possibleMMs.length);
@@ -269,11 +269,11 @@ function simulate() {
       break;
 
     case 3:
-      var dmChoice = getRandomInt(0, dmArray.length);
+      var dm = generateDeathMatch();
 
-      titleText = "Death Match " + episode + ": " + dmArray[dmChoice] + "\n";
+      titleText = "Death Match " + episode + ": " + dm + "\n";
       announceText += dmParticipants[0] + " vs. " + dmParticipants[1] + "\n";
-      tableData[2][episode] = dmArray[dmChoice];
+      tableData[2][episode] = dm;
       phase++;
       break;
 
@@ -314,8 +314,8 @@ function simulate() {
 
     case 6:
       var match = episode - placements.length;
-      var fmChoice = getRandomInt(0, dmArray.length);
-      titleText = "Final Match " + match + ": " + dmArray[fmChoice] + "\n";
+      var fm = generateDeathMatch();
+      titleText = "Final Match " + match + ": " + fm + "\n";
       announceText += players[0] + " vs. " + players[1] + "\n";
 
       if (finalScore == 0 && match == 1) {
@@ -329,7 +329,7 @@ function simulate() {
       }
 
       tableData[0][episode] = "FM" + match;
-      tableData[2][episode] = dmArray[fmChoice];
+      tableData[2][episode] = fm;
       phase++;
       break;
 
