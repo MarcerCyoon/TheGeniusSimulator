@@ -153,6 +153,7 @@ const prefixArray = [
 	"Laser",
 	"Rotating",
 	"Revolting",
+	"Politician",
 	"Abundance",
 	"1, 2, 3",
 	"A, B, C",
@@ -190,11 +191,13 @@ const prefixArray = [
 	"Number",
 	"Mental",
 	"Painting",
+	"Potion",
 	"Grid",
 	"Placebo",
 	"Nocebo",
 	"Kong's",
 	"Kong",
+	"Pokémon",
 	"Spirit",
 	"Jury",
 	"Zombie",
@@ -204,6 +207,7 @@ const prefixArray = [
 	"Euler",
 	"X",
 	"Marcer",
+	"Whims",
 	"ID",
 	"Chill",
 	"Betting",
@@ -256,6 +260,7 @@ const prefixArray = [
 	"Capitalism",
 	"Double-sided",
 	"Romeo and Juliet",
+	"Hexagonal",
 	"Halo",
 	"Zoom",
 	"Trivia",
@@ -278,12 +283,15 @@ const prefixArray = [
 	"Definitely Not",
 	"One Night",
 	"Welcome to the",
+	"Sinking of the",
+	"Hero of the",
 	"Catch the",
 	"Crack the",
 	"Fantasy",
 	"Multi-Round",
 	"Mystery",
 	"Sign",
+	"Letter",
 	"Gift",
 	"Murder",
 	"Target",
@@ -300,17 +308,23 @@ const prefixArray = [
 	"Turbo",
 	"Rune",
 	"Archwizard",
+	"Pandora's",
 	"God's",
 	"God",
+	"Divine",
 	"Gravity",
+	"Astral",
+	"Death",
 	"Secret",
 	"Squeaky",
 	"Sword",
 	"Shield",
+	"Soul",
 	"Universal",
 	"Galaxy",
 	"Ice",
 	"Fire",
+	"Electric",
 	"White",
 	"Black",
 	"Red",
@@ -341,6 +355,7 @@ const suffixArray = [
 	"Hold'em",
 	"Roulette",
 	"Auction",
+	"Crashdown",
 	"Draft",
 	"Sign",
 	"Set",
@@ -374,6 +389,7 @@ const suffixArray = [
 	"Stand",
 	"Market",
 	"Stock Market",
+	"Market Crater",
 	"Exchange",
 	"Mansion",
 	"Voyage",
@@ -430,6 +446,7 @@ const suffixArray = [
 	"Crusade",
 	"Conquest",
 	"Battle Royale",
+	"Alignment",
 	"Snake",
 	"Kittens",
 	"Rebels",
@@ -446,13 +463,32 @@ const suffixArray = [
 	"Werewolf", // meme werewolf in both arrays
 	"Black and White", // meme black and white in both arrays
 	"Element", // meme element in both arrays
+	"Death", // meme element in both arrays
 	"Field",
 	"Safe",
 	"Trouble",
 	"Quattro",
 	"Network",
 	"City",
-	"Mayhem"
+	"Mayhem",
+	"Library",
+	"Titanic",
+	"Konundrum",
+	"Flow",
+	"Box",
+	"Bluff",
+	"Anguish",
+	"Runes",
+	"Heaven",
+	"Hell",
+	"Tartarus",
+	"Robbery",
+	"Ballad",
+	"Aria",
+	"Crypt",
+	"Highway",
+	"Connector",
+	"Paranoia"
 ];
 
 function generateMainMatchName() {
@@ -514,7 +550,7 @@ function generateMainMatchName() {
 	}
 
 	// small chance you get II, III, or Redux added to the end of your game
-	if (getRandomInt(0, 100) <= 8) {
+	if (getRandomInt(0, 100) <= 5) {
 		if (getRandomInt(0, 100) <= 30) {
 			name += " III";
 		} else if (getRandomInt(0, 100) <= 50) {
@@ -522,6 +558,11 @@ function generateMainMatchName() {
 		} else {
 			name += " Redux";
 		}
+	}
+
+	// small chance to add Not to start of your game
+	if (getRandomInt(0, 100) <= 5) {
+		name = 'Not ' + name;
 	}
 
 	return name.trim();
