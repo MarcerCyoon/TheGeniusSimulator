@@ -262,6 +262,7 @@ const all_prefixes = [
 	"Far Out",
 	"Team",
 	"District",
+	"Distinct",
 	"Partner",
 	"Exploding",
 	"Investment",
@@ -417,6 +418,7 @@ const all_prefixes = [
 	"Bow",
 	"Arrow",
 	"Cursed",
+	"Illusory",
 	"awa"
 ];
 
@@ -636,6 +638,7 @@ const all_both = [
 	"Clock",
 	"Paradox",
 	"Archery",
+	"Pastiche",
 	"Curse"
 ];
 
