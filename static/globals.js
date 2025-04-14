@@ -127,7 +127,7 @@ const commArrays = [
 	["VicariousShaner", "Isa", "Rhys", "Nevaeh", "Landon", "Teal", "JohnAlwin", "Jiffa", "hazard", "rozes", "Swiggle", "Vijay", "Chazza647"]
 ]
 
-const prefixes = [
+const all_prefixes = [
 	"Doubting",
 	"Cooperative",
 	"Horror",
@@ -305,13 +305,15 @@ const prefixes = [
 	"Playthings of the",
 	"Art of the",
 	"Hero of the",
+	"Villain of the",
 	"Catch the",
 	"Crack the",
 	"Variations on",
-	"Highs and Lows of",
 	"All Hands on",
+	"Highs and Lows of",
 	"Proof by",
 	"The Amazing",
+	"The Awful",
 	"Flat Earth",
 	"Fantasy",
 	"Multi-Round",
@@ -418,7 +420,7 @@ const prefixes = [
 	"awa"
 ];
 
-const suffixes = [
+const all_suffixes = [
 	"Race",
 	"'s Dilemma",
 	"Dilemma",
@@ -600,7 +602,7 @@ const suffixes = [
 	"Treasure Island"
 ];
 
-const both = [
+const all_both = [
 	"Quattro",
 	"Werewolf",
 	"Black and White",
@@ -637,8 +639,8 @@ const both = [
 	"Curse"
 ];
 
-const prefixArray = both.concat(prefixes);
-const suffixArray = both.concat(suffixes);
+const prefixArray = all_both.concat(all_prefixes);
+const suffixArray = all_both.concat(all_suffixes);
 
 function generateMainMatchName() {
 	var chance = 100;
@@ -661,8 +663,8 @@ function generateMainMatchName() {
 		if (chance < 16) {
 			// filter out ", pass" if >1 prefixes
 			suffixes = suffixArray.filter(suffix => !suffix.startsWith(","));
-		} else if (name.includes(" the") || name.includes("'s")) {
-			// filter out all the ones with grammar if name has "Welcome to the" or "Catch the" or a "'s"
+		} else if (name.includes(" the") || name.includes(" of") || name.includes(" on") || name.includes(" by") || name.includes("'s")) {
+			// filter out all the ones with grammar if name has " the/of/on/by" or a "'s"
 			suffixes = suffixArray.filter(suffix => !(suffix.startsWith(",") || suffix.includes("'s") || suffix.startsWith("-")));
 		}
 
@@ -677,7 +679,7 @@ function generateMainMatchName() {
 
 	} else {
 		var nameArray = [];
-		var prefixes = prefixArray.filter(prefix => !(prefix.includes(" the") || prefix.includes("'s")));
+		var prefixes = prefixArray.filter(prefix => !(prefix.includes(" the") || name.includes(" of") || name.includes(" on") || name.includes(" by") || prefix.includes("'s")) || prefix == "Definitely Not" || prefix == "Wild, Wild");
 		var suffixes = suffixArray.filter(suffix => !(suffix.startsWith(",") || suffix.includes("'s") || suffix.startsWith("-")));
 		var words = [...prefixes, ...suffixes];
 
