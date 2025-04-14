@@ -271,6 +271,9 @@ const all_prefixes = [
 	"Capitalism",
 	"Anarchy",
 	"Double-sided",
+	"Solo",
+	"Double",
+	"Triple",
 	"Romeo and Juliet",
 	"Hexagonal",
 	"Halo",
@@ -304,6 +307,10 @@ const all_prefixes = [
 	"Sinking of the",
 	"Memories of the",
 	"Playthings of the",
+	"Battle of the",
+	"Heart of the",
+	"Legend of the",
+	"The Rules of the",
 	"Art of the",
 	"Hero of the",
 	"Villain of the",
@@ -312,6 +319,7 @@ const all_prefixes = [
 	"Variations on",
 	"All Hands on",
 	"Highs and Lows of",
+	"The Dark Souls of",
 	"Proof by",
 	"The Amazing",
 	"The Awful",
@@ -352,7 +360,6 @@ const all_prefixes = [
 	"Shield",
 	"Soul",
 	"Universal",
-	"Galaxy",
 	"Devil",
 	"Devil's",
 	"Demonic",
@@ -419,6 +426,8 @@ const all_prefixes = [
 	"Arrow",
 	"Cursed",
 	"Illusory",
+	"Romance",
+	"Wanted",
 	"awa"
 ];
 
@@ -432,9 +441,21 @@ const all_suffixes = [
 	"Court",
 	"'s Count",
 	"Count",
+	"'s Bluff",
+	"Bluff",
 	"Open, Pass",
 	", Pass",
 	"Menu",
+	"on the High Seas",
+	"of Success",
+	"of Failure",
+	"of the Four Kingdoms",
+	"of the Five Kingdoms",
+	"in the World",
+	"in Eden",
+	"in Terror",
+	"All Alone",
+	"All Together",
 	"Goofspiel",
 	"Poker",
 	"Blackjack",
@@ -486,9 +507,12 @@ const all_suffixes = [
 	"Sudoku",
 	"Chess",
 	"Checkers",
+	"Othello",
 	"Chutes and Ladders",
 	"Battleship",
 	"Solitaire",
+	"Cards",
+	"Zendo",
 	"Tic-Tac-Toe",
 	"-Tac-Toe",
 	"-finding",
@@ -505,6 +529,7 @@ const all_suffixes = [
 	"Judgment",
 	"Commandments",
 	"Domain",
+	"Shatter",
 	"Teller",
 	"Breaker",
 	"Collector",
@@ -520,6 +545,9 @@ const all_suffixes = [
 	"Shop",
 	"Party",
 	"Party Pack",
+	"Date Night",
+	"Talent Show",
+	"Showdown",
 	"Jam",
 	"Gamble",
 	"Trick",
@@ -542,11 +570,15 @@ const all_suffixes = [
 	"Alignment",
 	"Snake",
 	"Kittens",
+	"Puppies",
 	"Rebels",
 	"Killers",
 	"Loyalists",
 	"Detectives",
 	"Criminals",
+	"Shooters",
+	"Sharpshooters",
+	"Soulmates",
 	"Mafia",
 	"Marathon",
 	"Basketball",
@@ -559,12 +591,14 @@ const all_suffixes = [
 	"Town",
 	"Mayhem",
 	"Library",
+	"Gallery",
+	"Museum",
+	"Exhibition",
 	"Titanic",
 	"Conundrum",
 	"Konundrum",
 	"Flow",
 	"Box",
-	"Bluff",
 	"Anguish",
 	"Runes",
 	"Heaven",
@@ -601,7 +635,13 @@ const all_suffixes = [
 	"Loop",
 	"Factory",
 	"Interpretation",
-	"Treasure Island"
+	"Treasure Island",
+	"Courtroom",
+	"Board",
+	"Corruption",
+	"Control",
+	"Superiority",
+	"Inferiority"
 ];
 
 const all_both = [
@@ -639,7 +679,12 @@ const all_both = [
 	"Paradox",
 	"Archery",
 	"Pastiche",
-	"Curse"
+	"Curse",
+	"Galaxy",
+	"Limbo",
+	"Card",
+	"Logic",
+	"Soulmate"
 ];
 
 const prefixArray = all_both.concat(all_prefixes);
@@ -668,7 +713,7 @@ function generateMainMatchName() {
 			suffixes = suffixArray.filter(suffix => !suffix.startsWith(","));
 		} else if (name.includes(" the") || name.includes(" of") || name.includes(" on") || name.includes(" by") || name.includes("'s")) {
 			// filter out all the ones with grammar if name has " the/of/on/by" or a "'s"
-			suffixes = suffixArray.filter(suffix => !(suffix.startsWith(",") || suffix.includes("'s") || suffix.startsWith("-")));
+			suffixes = suffixArray.filter(suffix => !(suffix.startsWith(",") || suffix.includes("'s") || suffix.startsWith("-") || suffix.startsWith("on ") || suffix.startsWith("in ") || suffix.startsWith("of ") || suffix.startsWith("All ")));
 		}
 
 		num = getRandomInt(0, suffixes.length);
@@ -683,7 +728,7 @@ function generateMainMatchName() {
 	} else {
 		var nameArray = [];
 		var prefixes = prefixArray.filter(prefix => !(prefix.includes(" the") || prefix.includes(" of") || prefix.includes(" on") || prefix.includes(" by") || prefix.includes("'s")) || prefix == "Definitely Not" || prefix == "Wild, Wild");
-		var suffixes = suffixArray.filter(suffix => !(suffix.startsWith(",") || suffix.includes("'s") || suffix.startsWith("-")));
+		var suffixes = suffixArray.filter(suffix => !(suffix.startsWith(",") || suffix.includes("'s") || suffix.startsWith("-")) || suffix.startsWith("on ") || suffix.startsWith("in ") || suffix.startsWith("of "));
 		var words = [...prefixes, ...suffixes];
 
 		while (chance >= getRandomInt(0, 100)) {
@@ -695,12 +740,15 @@ function generateMainMatchName() {
 		num = getRandomInt(0, words.length);
 		nameArray.push(retrieve(words, num));
 
-		if (getRandomInt(0, 100) <= 70) {
-			name = nameArray.join(" and ");
-		} else {
-			name = nameArray.join(" or ");
-		}
+		var rng = getRandomInt(0, 100);
 
+		if (rng <= 60) {
+			name = nameArray.join(" and ");
+		} else if (rng <= 90) {
+			name = nameArray.join(" or ");
+		} else {
+			name = nameArray.join(" vs. ");
+		}
 	}
 
 	// small chance you get II, III, ∞, or Redux added to the end of your game
