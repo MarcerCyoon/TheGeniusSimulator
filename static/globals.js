@@ -475,6 +475,8 @@ const all_suffixes = [
 	"Duel",
 	"Standoff",
 	"Dice",
+	"Cards",
+	"Deck",
 	"Block",
 	"Game",
 	"Speedrun",
@@ -511,7 +513,6 @@ const all_suffixes = [
 	"Chutes and Ladders",
 	"Battleship",
 	"Solitaire",
-	"Cards",
 	"Zendo",
 	"Tic-Tac-Toe",
 	"-Tac-Toe",
@@ -537,6 +538,8 @@ const all_suffixes = [
 	"Destroyer",
 	"Detector",
 	"Deflector",
+	"Reflector",
+	"Protector",
 	"Defender",
 	"Defenders",
 	"Slingshot",
@@ -641,7 +644,8 @@ const all_suffixes = [
 	"Corruption",
 	"Control",
 	"Superiority",
-	"Inferiority"
+	"Inferiority",
+	"Mirror"
 ];
 
 const all_both = [
