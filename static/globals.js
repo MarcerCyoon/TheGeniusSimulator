@@ -273,6 +273,7 @@ const all_prefixes = [
 	"Double-sided",
 	"Solo",
 	"Double",
+	"Dual",
 	"Triple",
 	"Romeo and Juliet",
 	"Hexagonal",
@@ -290,6 +291,7 @@ const all_prefixes = [
 	"3D",
 	"4D",
 	"5D",
+	"Camera",
 	"Layered",
 	"Extreme",
 	"Super",
@@ -369,6 +371,8 @@ const all_prefixes = [
 	"Angel",
 	"Angel's",
 	"Virus",
+	"Plague",
+	"Cure",
 	"Ice",
 	"Fire",
 	"Electric",
@@ -425,10 +429,13 @@ const all_prefixes = [
 	"Bow",
 	"Arrow",
 	"Cursed",
+	"Synchronized",
 	"Illusory",
 	"Romance",
 	"Wanted",
 	"Mirror",
+	"Meta",
+	"Enigmatic",
 	"awa"
 ];
 
@@ -511,6 +518,8 @@ const all_suffixes = [
 	"Chess",
 	"Checkers",
 	"Othello",
+	"Squava",
+	"Scrabble",
 	"Chutes and Ladders",
 	"Battleship",
 	"Solitaire",
@@ -527,7 +536,10 @@ const all_suffixes = [
 	"Nim",
 	"Tetris",
 	"Effect",
+	"Survivor",
+	"Big Brother",
 	"Streak",
+	"Scramble",
 	"Judgment",
 	"Commandments",
 	"Domain",
@@ -543,6 +555,7 @@ const all_suffixes = [
 	"Protector",
 	"Defender",
 	"Defenders",
+	"Traitors",
 	"Slingshot",
 	"Simulator",
 	"Slayer",
@@ -565,6 +578,8 @@ const all_suffixes = [
 	"Warfare",
 	"War",
 	"Clash",
+	"Brawl",
+	"Melee",
 	"Fight",
 	"Crusade",
 	"Conquest",
@@ -644,8 +659,13 @@ const all_suffixes = [
 	"Board",
 	"Corruption",
 	"Control",
+	"Season",
 	"Superiority",
-	"Inferiority"
+	"Inferiority",
+	"Madness",
+	"Forest",
+	"Heist",
+	"Resistance"
 ];
 
 const all_both = [
@@ -688,7 +708,10 @@ const all_both = [
 	"Limbo",
 	"Card",
 	"Logic",
-	"Soulmate"
+	"Soulmate",
+	"Quack",
+	"Hieroglyph",
+	"Traitor"
 ];
 
 const prefixArray = all_both.concat(all_prefixes);
