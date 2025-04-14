@@ -682,7 +682,7 @@ function generateMainMatchName() {
 
 	} else {
 		var nameArray = [];
-		var prefixes = prefixArray.filter(prefix => !(prefix.includes(" the") || name.includes(" of") || name.includes(" on") || name.includes(" by") || prefix.includes("'s")) || prefix == "Definitely Not" || prefix == "Wild, Wild");
+		var prefixes = prefixArray.filter(prefix => !(prefix.includes(" the") || prefix.includes(" of") || prefix.includes(" on") || prefix.includes(" by") || prefix.includes("'s")) || prefix == "Definitely Not" || prefix == "Wild, Wild");
 		var suffixes = suffixArray.filter(suffix => !(suffix.startsWith(",") || suffix.includes("'s") || suffix.startsWith("-")));
 		var words = [...prefixes, ...suffixes];
 
