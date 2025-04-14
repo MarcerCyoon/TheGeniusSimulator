@@ -645,7 +645,7 @@ function generateMainMatchName() {
 	var name;
 
 	// will generated name follow normal standards or "A and B" standards?
-	if (getRandomInt(0, 100) <= 85) {
+	if (getRandomInt(0, 100) <= 90) {
 		name = "";
 		var prefixes = [...prefixArray];
 
