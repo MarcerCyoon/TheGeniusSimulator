@@ -556,6 +556,7 @@ const suffixes = [
 	"Mayhem",
 	"Library",
 	"Titanic",
+	"Conundrum",
 	"Konundrum",
 	"Flow",
 	"Box",
@@ -645,7 +646,7 @@ function generateMainMatchName() {
 	var name;
 
 	// will generated name follow normal standards or "A and B" standards?
-	if (getRandomInt(0, 100) <= 90) {
+	if (getRandomInt(0, 100) <= 92) {
 		name = "";
 		var prefixes = [...prefixArray];
 
