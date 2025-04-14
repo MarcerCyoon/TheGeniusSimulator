@@ -428,6 +428,7 @@ const all_prefixes = [
 	"Illusory",
 	"Romance",
 	"Wanted",
+	"Mirror",
 	"awa"
 ];
 
@@ -644,8 +645,7 @@ const all_suffixes = [
 	"Corruption",
 	"Control",
 	"Superiority",
-	"Inferiority",
-	"Mirror"
+	"Inferiority"
 ];
 
 const all_both = [
