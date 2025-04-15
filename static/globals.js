@@ -155,6 +155,7 @@ const all_prefixes = [
 	"Laser",
 	"Rotating",
 	"Revolting",
+	"Revolving",
 	"Voting",
 	"Politician",
 	"Abundance",
@@ -222,12 +223,17 @@ const all_prefixes = [
 	"Betting",
 	"Bidding",
 	"Swapping",
+	"Hopping",
+	"Pointing",
 	"Jousting",
 	"Drafting",
+	"Crafting",
 	"Trading",
 	"Smuggling",
 	"Grouping",
 	"Guessing",
+	"Hiding",
+	"Hidden",
 	"Channel",
 	"Domino",
 	"Hexomino",
@@ -235,6 +241,7 @@ const all_prefixes = [
 	"Atomic",
 	"Modular",
 	"Quick",
+	"Rapid",
 	"Bullet",
 	"Pathing",
 	"Today's",
@@ -436,6 +443,7 @@ const all_prefixes = [
 	"Mirror",
 	"Meta",
 	"Enigmatic",
+	"Magical",
 	"awa"
 ];
 
@@ -534,6 +542,7 @@ const all_suffixes = [
 	"Monorail",
 	"Duorail",
 	"Nim",
+	"Nomic",
 	"Tetris",
 	"Effect",
 	"Survivor",
@@ -626,6 +635,8 @@ const all_suffixes = [
 	"Robbery",
 	"Ballad",
 	"Aria",
+	"Elegy",
+	"Eulogy",
 	"Crypt",
 	"Highway",
 	"Connector",
@@ -711,7 +722,8 @@ const all_both = [
 	"Soulmate",
 	"Quack",
 	"Hieroglyph",
-	"Traitor"
+	"Traitor",
+	"Soup"
 ];
 
 const prefixArray = all_both.concat(all_prefixes);
